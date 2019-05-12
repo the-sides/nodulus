@@ -1,3 +1,6 @@
+const debug = true;
+const verbose = true;
+
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
@@ -27,13 +30,20 @@ window.addEventListener("resize", ()=>{
 
 function keyPressed(e){
     let k = e.key;
+    if(debug){
+        if(e.keyCode === 32){
+            cometSpeed = 0;
+            sph.position.x = 0;
+            return 1;
+        }
+    }
     if(k === "ArrowLeft"){
         cometSpeed = -.5;
     }
     else if(k === "ArrowRight"){
         cometSpeed = .5;
     }
-    console.log(k);
+    if(verbose) console.log(k, '|', e.keyCode);
 }
 
 function cometMovement(){

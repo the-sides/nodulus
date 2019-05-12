@@ -12,12 +12,18 @@ let cometSpeed = 0;
 let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
+sph.position.y = -45;
 
 scene.add(light, sph);
 
 render();
 
-document.addEventListener("keydown", keyPressed);
+document.addEventListener("keydown", keyPressed, true);
+window.addEventListener("resize", ()=>{
+    camera.aspect = (window.innerWidth / window.innerHeight);
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
 
 function keyPressed(e){
     let k = e.key;

@@ -15,7 +15,7 @@ let cube = new THREE.Mesh(geometry, material);
 geometry = new THREE.PlaneBufferGeometry(2000, 2000, 8, 8);
 material = new THREE.MeshBasicMaterial({color:0x000000, side: THREE.DoubleSide});
 let plane = new THREE.Mesh(geometry, material)
-plane.rotateX( - Math.PI / 2);
+// plane.rotateX( - Math.PI / 2);
 
 scene.add(cube, plane);
 camera.position.z = 30;

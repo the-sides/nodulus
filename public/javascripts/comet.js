@@ -1,11 +1,13 @@
+import {visibleHeightAtZDepth, visibleWidthAtZDepth} from './utils.js'
+
 const debug = true;
-const verbose = true;
+const verbose = false;
 
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 5000);
+let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 500);
 camera.position.set(0, 0, 250);
 
 let scene = new THREE.Scene();
@@ -15,7 +17,9 @@ let cometSpeed = 0;
 let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
-sph.position.y = -45;
+
+// Allows the sphere to properly initialize independant of camera
+sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 scene.add(light, sph);
 
@@ -25,11 +29,35 @@ document.addEventListener("keydown", keyPressed, true);
 window.addEventListener("resize", ()=>{
     camera.aspect = (window.innerWidth / window.innerHeight);
     camera.updateProjectionMatrix();
+
+    if(verbose) console.log("dim", window.innerWidth)
+    if(verbose) console.log("at z:0", visibleWidthAtZDepth(0, camera))
+    if(verbose) console.log("at z:6", visibleWidthAtZDepth(6, camera))
+
+    // sph.position.x = visibleWidthAtZDepth(6, camera)/2 - 3.5
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
+function boundCheckX(dimension, suspectPos, depth){
+    let limit = undefined;
+    if(dimension == 'x')
+        limit = visibleWidthAtZDepth(depth, camera)/2 - 3.5 ;
+
+    else if(dimension == 'y')
+        limit = visibleHeightAtZDepth(depth, camera)/2 - 3.5 ;
+    else throw error("Unknown dimension");
+
+
+    if( Math.abs(suspectPos) > limit)
+        cometSpeed = 0;
+
+}
+
 function keyPressed(e){
     let k = e.key;
+    //////////////////////////////////////////////////
+    ////     DETECT KEY PRESS AND APPLY LOGIC
+    //////////////////////////////////////////////////
     if(debug){
         if(e.keyCode === 32){
             cometSpeed = 0;
@@ -51,6 +79,7 @@ function cometMovement(){
 }
 
 function update(){
+    boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
 }
 

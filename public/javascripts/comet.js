@@ -18,7 +18,7 @@ let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
 
-// Allows the sphere to properly initialize independant of camera
+// Allows the sphere to properly initialize independent of camera
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 scene.add(light, sph);
@@ -41,10 +41,10 @@ window.addEventListener("resize", ()=>{
 function boundCheckX(dimension, suspectPos, depth){
     let limit = undefined;
     if(dimension == 'x')
-        limit = visibleWidthAtZDepth(depth, camera)/2 - 3.5 ;
+        limit = visibleWidthAtZDepth(depth, camera)/2 - 5 ;
 
     else if(dimension == 'y')
-        limit = visibleHeightAtZDepth(depth, camera)/2 - 3.5 ;
+        limit = visibleHeightAtZDepth(depth, camera)/2 - 5 ;
     else throw error("Unknown dimension");
 
 

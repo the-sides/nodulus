@@ -52,6 +52,11 @@ function boundCheckX(dimension, suspectPos, depth){
 
 }
 
+let sideL = document.getElementById('left')
+let sideR = document.getElementById('right')
+sideL.addEventListener('mousedown', ()=>{cometSpeed = -.5}, true)
+sideR.addEventListener('mousedown', ()=>{cometSpeed = .5}, true)
+
 document.addEventListener("keydown", keyPressed, true);
 function keyPressed(e){
     let k = e.key;
@@ -100,7 +105,7 @@ function rotateObject(object, X=0, Y=0, Z=0){
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
-    rotateObject(ast, 40, 50, 20);
+    // rotateObject(ast, 40, 50, 20);
 }
 
 function render(){

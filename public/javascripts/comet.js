@@ -25,7 +25,6 @@ scene.add(light, sph);
 
 render();
 
-document.addEventListener("keydown", keyPressed, true);
 window.addEventListener("resize", ()=>{
     camera.aspect = (window.innerWidth / window.innerHeight);
     camera.updateProjectionMatrix();
@@ -53,6 +52,7 @@ function boundCheckX(dimension, suspectPos, depth){
 
 }
 
+document.addEventListener("keydown", keyPressed, true);
 function keyPressed(e){
     let k = e.key;
     //////////////////////////////////////////////////
@@ -78,9 +78,29 @@ function cometMovement(){
     sph.translateX(cometSpeed);
 }
 
+// Generating a asteroid. TEST //
+let ast = asteroidGen();
+function asteroidGen(){
+    let geo = new THREE.SphereGeometry(6, 3, 3);
+    let mat = new THREE.MeshBasicMaterial({color: 0x999999});
+    let a = new THREE.Mesh(geo, mat);
+    a.position.y = 50;
+
+    scene.add(a);
+    return a;
+}
+
+// Rotating any object, given XYZ degrees
+function rotateObject(object, X=0, Y=0, Z=0){
+    object.rotateX(THREE.Math.degToRad(X));
+    object.rotateY(THREE.Math.degToRad(Y));
+    object.rotateX(THREE.Math.degToRad(X));
+}
+
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
+    rotateObject(ast, 40, 50, 20);
 }
 
 function render(){

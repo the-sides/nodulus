@@ -22,6 +22,10 @@ let sph = new THREE.Mesh(geo, mat);
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 scene.add(light, sph);
+let listOfAst = [];
+let ast = asteroidGen(200);
+let ast2 = asteroidGen(300);
+console.log(listOfAst)
 
 render();
 
@@ -64,7 +68,7 @@ function keyPressed(e){
     ////     DETECT KEY PRESS AND APPLY LOGIC
     //////////////////////////////////////////////////
     if(debug){
-        if(e.keyCode === 32){
+        if(k === " "){ // Spacebar
             cometSpeed = 0;
             sph.position.x = 0;
             return 1;
@@ -84,26 +88,31 @@ function cometMovement(){
 }
 
 // Generating a asteroid. TEST //
-let listOfAst = [];
-let ast = asteroidGen();
-console.log(listOfAst)
-function asteroidGen(){
+function asteroidGen(d){
     let geo = new THREE.SphereGeometry(6, 3, 3);
     let mat = new THREE.MeshBasicMaterial({color: 0x999999});
     let a = new THREE.Mesh(geo, mat);
-    a.position.y = 50;
-    a.rotateX(THREE.Math.degToRad(300));
+    a.position.y = 50
+    a.position.x = d * 0.1
 
     scene.add(a);
     listOfAst.push(a);
-    console.log(listOfAst);
     document.addEventListener("keydown", keyPressed, true);
     return a;
 }
 
 function asteroidMovement(){
+    if(listOfAst === undefined){
+        return false;
+    }
     for(let i = 0; i < listOfAst.length; i++){
-        listOfAst[i].rotateX(THREE.Math.degToRad(10));
+        listOfAst[i].rotateX(THREE.Math.degToRad(1));
+        listOfAst[i].rotateY(THREE.Math.degToRad(2));
+
+        if(listOfAst[i].position.y <= -(visibleHeightAtZDepth(6, camera) / 2)){
+            listOfAst[i].position.y = 50 + Math.random()*10;
+        }
+        listOfAst[i].position.y -= 1;
     }
 }
 
@@ -117,11 +126,7 @@ function rotateObject(object, X=0, Y=0, Z=0){
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
-<<<<<<< Updated upstream
-    // rotateObject(ast, 40, 50, 20);
-=======
-
->>>>>>> Stashed changes
+    asteroidMovement();
 }
 
 function render(){

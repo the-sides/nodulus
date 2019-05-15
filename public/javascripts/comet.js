@@ -84,28 +84,44 @@ function cometMovement(){
 }
 
 // Generating a asteroid. TEST //
+let listOfAst = [];
 let ast = asteroidGen();
+console.log(listOfAst)
 function asteroidGen(){
     let geo = new THREE.SphereGeometry(6, 3, 3);
     let mat = new THREE.MeshBasicMaterial({color: 0x999999});
     let a = new THREE.Mesh(geo, mat);
     a.position.y = 50;
+    a.rotateX(THREE.Math.degToRad(300));
 
     scene.add(a);
+    listOfAst.push(a);
+    console.log(listOfAst);
+    document.addEventListener("keydown", keyPressed, true);
     return a;
+}
+
+function asteroidMovement(){
+    for(let i = 0; i < listOfAst.length; i++){
+        listOfAst[i].rotateX(THREE.Math.degToRad(10));
+    }
 }
 
 // Rotating any object, given XYZ degrees
 function rotateObject(object, X=0, Y=0, Z=0){
-    object.rotateX(THREE.Math.degToRad(X));
+    ast.rotateX(THREE.Math.degToRad(X));
     object.rotateY(THREE.Math.degToRad(Y));
-    object.rotateX(THREE.Math.degToRad(X));
+    object.rotateZ(THREE.Math.degToRad(Z));
 }
 
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
+<<<<<<< Updated upstream
     // rotateObject(ast, 40, 50, 20);
+=======
+
+>>>>>>> Stashed changes
 }
 
 function render(){

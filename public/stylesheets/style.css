@@ -16,6 +16,22 @@ body {
   justify-items: center;
   flex-direction: column;
 }
+#pedos{
+  position: absolute;
+  bottom:0;
+  height: 95%;
+  width: 100%;
+  display: flex;
+  opacity: .35;
+}
+#left{
+  border:3px solid blue;
+  flex: 1 50%;
+}
+#right{
+  border:3px solid red;
+  flex: 1 50%;
+}
 canvas{
   width:100%;
   height:100%;

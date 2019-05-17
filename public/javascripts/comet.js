@@ -17,12 +17,15 @@ camera.position.set(0, 0, 250);
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x404040);
 
+//////////////////////////////
 //      SOME VARIABLES      //
 let cometSpeed = 0;
+let listOfAst = [];
 let ast = asteroidGen(200);
 let ast2 = asteroidGen(300);
-let listOfAst = [];
+let asteroidSpeed = 1;
 //  END OF SOME VARIABLES   //
+//////////////////////////////
 
 // Creates the comet //
 let geo = new THREE.SphereGeometry(5, 6, 6);
@@ -39,7 +42,7 @@ render();
 window.addEventListener("resize", ()=>{
     camera.aspect = (window.innerWidth / window.innerHeight);
     camera.updateProjectionMatrix();
-
+    
     if(verbose) console.log("dim", window.innerWidth)
     if(verbose) console.log("at z:0", visibleWidthAtZDepth(0, camera))
     if(verbose) console.log("at z:6", visibleWidthAtZDepth(6, camera))
@@ -99,8 +102,8 @@ function asteroidGen(d){
     let geo = new THREE.SphereGeometry(6, 3, 3);
     let mat = new THREE.MeshBasicMaterial({color: 0x999999});
     let a = new THREE.Mesh(geo, mat);
-    a.position.y = 50
-    a.position.x = d * 0.1
+    a.position.y = 65;
+    a.position.x = d * 0.2;
 
     scene.add(a);
     listOfAst.push(a);
@@ -120,7 +123,7 @@ function asteroidMovement(){
         if(listOfAst[i].position.y <= -(visibleHeightAtZDepth(6, camera) / 2)){
             listOfAst[i].position.y = 50 + Math.random()*10;
         }
-        listOfAst[i].position.y -= 1;
+        listOfAst[i].position.y -= asteroidSpeed;
     }
 }
 

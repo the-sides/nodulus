@@ -1,19 +1,30 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth} from './utils.js'
 
+// Debugging variables.
 const debug = true;
 const verbose = false;
 
+// Creates the renderer in Three.js and adds it to the HTML body.
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+// Creates the camera and where it's looking.
 let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 500);
 camera.position.set(0, 0, 250);
 
+// Creates the scene and lighting.
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x404040);
-let cometSpeed = 0;
 
+//      SOME VARIABLES      //
+let cometSpeed = 0;
+let ast = asteroidGen(200);
+let ast2 = asteroidGen(300);
+let listOfAst = [];
+//  END OF SOME VARIABLES   //
+
+// Creates the comet //
 let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
@@ -21,12 +32,8 @@ let sph = new THREE.Mesh(geo, mat);
 // Allows the sphere to properly initialize independent of camera
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
+// Initial scene objects and render call.
 scene.add(light, sph);
-let listOfAst = [];
-let ast = asteroidGen(200);
-let ast2 = asteroidGen(300);
-console.log(listOfAst)
-
 render();
 
 window.addEventListener("resize", ()=>{
@@ -101,6 +108,7 @@ function asteroidGen(d){
     return a;
 }
 
+// Asteroid movement, rotation and position.
 function asteroidMovement(){
     if(listOfAst === undefined){
         return false;
@@ -123,14 +131,16 @@ function rotateObject(object, X=0, Y=0, Z=0){
     object.rotateZ(THREE.Math.degToRad(Z));
 }
 
+// Changes the scene objects.
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z)
     cometMovement();
     asteroidMovement();
 }
 
+// Renders the changed scene objects.
 function render(){
-    requestAnimationFrame(render);
+    requestAnimationFrame(render); // This tells the browser we want to do animations.
     update();
-    renderer.render(scene, camera);
+    renderer.render(scene, camera); // This actually renders the animations.
 }

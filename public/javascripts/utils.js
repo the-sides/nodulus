@@ -16,4 +16,18 @@ const visibleWidthAtZDepth = ( depth, camera ) => {
   return height * camera.aspect;
 };
 
-export {visibleHeightAtZDepth, visibleWidthAtZDepth}
+function boundCheckX(dimension, suspectPos, depth, inCamera, cometSpeedFunc){
+    let limit = undefined;
+    if(dimension == 'x')
+        limit = visibleWidthAtZDepth(depth, inCamera)/2 - 5 ;
+
+    else if(dimension == 'y')
+        limit = visibleHeightAtZDepth(depth, inCamera)/2 - 5 ;
+    else throw error("Unknown dimension");
+
+
+    if( Math.abs(suspectPos) > limit)
+        cometSpeedFunc(0);
+}
+
+export {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX}

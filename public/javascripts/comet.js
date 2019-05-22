@@ -14,11 +14,14 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x404040);
+let dirLight = new THREE.SpotLight(0xffffff, .5);
 
 //////////////////////////////
 //      SOME VARIABLES      //
 let cometSpeed = 0;
 let listOfAst = [];
+let colliders = [];
+let cometCollider = new THREE.Sphere();
 let ast = asteroidGen(200);
 let ast2 = asteroidGen(300);
 let asteroidSpeed = 1;
@@ -34,6 +37,12 @@ let sph = new THREE.Mesh(geo, mat);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 camera.position.set(0, 0, 250);
+dirLight.castShadow = true;
+dirLight.receiveShadow = true
+dirLight.shadowDarkness = .35;
+dirLight.position.set(0, 0, 250);
+sph.receiveShadow = true;
+dirLight.target = scene;
 
 let Width = visibleWidthAtZDepth(6, camera);
 
@@ -42,7 +51,7 @@ let Width = visibleWidthAtZDepth(6, camera);
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 // Initial scene objects and render call.
-scene.add(light, sph, stars);
+scene.add(dirLight, sph, stars);
 render();
 
 
@@ -58,7 +67,8 @@ function moveComet(speed){
 
 
 function cometMovement(){
-    sph.translateX(cometSpeed);
+    sph.position.x += cometSpeed;
+    cometCollider.center = sph.position;
 }
 
 // Generating a asteroid. TEST //
@@ -66,11 +76,16 @@ function asteroidGen(d){
     let geo = new THREE.SphereGeometry(6, 3, 3);
     let mat = new THREE.MeshBasicMaterial({color: 0x999999});
     let a = new THREE.Mesh(geo, mat);
-    a.position.y = 65;
-    a.position.x = d * 0.2;
+    let coll = new THREE.Sphere();
+    a.position.y = 70 + Math.random()*(d/10);
+    a.position.x = d * 0.4 * (Math.random() - .5);
+    a.receiveShadow = true;
+    coll.center = a.position;
+    coll.radius = 3;
 
     scene.add(a);
     listOfAst.push(a);
+    colliders.push(coll);
     document.addEventListener("keydown", keyPressed, true);
     return a;
 }
@@ -83,19 +98,19 @@ function asteroidMovement(){
     for(let i = 0; i < listOfAst.length; i++){
         listOfAst[i].rotateX(THREE.Math.degToRad(1));
         listOfAst[i].rotateY(THREE.Math.degToRad(2));
+        
 
         if(listOfAst[i].position.y <= (-(visibleHeightAtZDepth(6, camera) / 2) - 30)){
             listOfAst[i].position.y = 70 + Math.random()*10;
             listOfAst[i].position.x = getRandomInt(-Width/2, Width/2);
         }
-        let sphere = new THREE.Sphere(listOfAst[i].position, 3);
-        let sphere2 = new THREE.Sphere(sph.position, 3);
-
-        if(sphere.intersectsSphere(sphere2)){
-            console.log("HIT");
-        }
 
         listOfAst[i].position.y -= asteroidSpeed;
+        colliders[i].center = listOfAst[i].position;
+        
+        if(colliders[i].intersectsSphere(cometCollider)){
+            console.log("HIT");
+        }
     }
 }
 

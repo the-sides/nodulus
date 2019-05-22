@@ -1,4 +1,4 @@
-import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX} from './utils.js'
+import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} from './utils.js'
 
 // Debugging variables.
 const debug = true;
@@ -33,6 +33,8 @@ let sph = new THREE.Mesh(geo, mat);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 camera.position.set(0, 0, 250);
+
+let Width = visibleWidthAtZDepth(6, camera);
 
 // Last minute sphere configurations
 //   Allows the sphere to properly initialize independent of camera
@@ -81,9 +83,17 @@ function asteroidMovement(){
         listOfAst[i].rotateX(THREE.Math.degToRad(1));
         listOfAst[i].rotateY(THREE.Math.degToRad(2));
 
-        if(listOfAst[i].position.y <= -(visibleHeightAtZDepth(6, camera) / 2)){
-            listOfAst[i].position.y = 50 + Math.random()*10;
+        if(listOfAst[i].position.y <= (-(visibleHeightAtZDepth(6, camera) / 2) - 30)){
+            listOfAst[i].position.y = 70 + Math.random()*10;
+            listOfAst[i].position.x = getRandomInt(-Width/2, Width/2);
         }
+        if(listOfAst[i].position.y <= -30){
+            console.log("Detection active");
+            if(listOfAst[i].intersectsSphere(sph)){
+                console.log("HIT");
+            }
+        }
+
         listOfAst[i].position.y -= asteroidSpeed;
     }
 }

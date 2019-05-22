@@ -30,4 +30,10 @@ function boundCheckX(dimension, suspectPos, depth, inCamera, cometSpeedFunc){
         cometSpeedFunc(0);
 }
 
-export {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX}
+function getRandomInt(min, max){
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+export {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt}

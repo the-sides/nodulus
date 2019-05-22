@@ -1,4 +1,4 @@
-import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX} from './utils.js'
+import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} from './utils.js'
 import stars from './background.js'
 
 // Debugging variables.

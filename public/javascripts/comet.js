@@ -88,12 +88,20 @@ function asteroidMovement(){
             listOfAst[i].position.y = 70 + Math.random()*10;
             listOfAst[i].position.x = getRandomInt(-Width/2, Width/2);
         }
-        if(listOfAst[i].position.y <= -30){
+        buffGeo = listOfAst[i].geometry; 
+        buffGeo2 = sph.geometry;
+        let sphere = new THREE.Sphere(listOfAst[i].position, 3);
+        let sphere2 = new THREE.Sphere(sph.position, 3);
+
+        if(sphere.intersectsSphere(sphere2)){
+            console.log("HIT");
+        }
+            /*if(listOfAst[i].position.y <= -30){
             console.log("Detection active");
-            if(listOfAst[i].intersectsSphere(sph)){
+            if(listOfAst[i].intersectSphere(sph)){
                 console.log("HIT");
             }
-        }
+        }*/
 
         listOfAst[i].position.y -= asteroidSpeed;
     }

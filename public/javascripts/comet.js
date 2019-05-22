@@ -1,14 +1,15 @@
-import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} from './utils.js'
+import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX} from './utils.js'
+import stars from './background.js'
 
 // Debugging variables.
 const debug = true;
 const verbose = false;
 
 // Creates the renderer in Three.js and adds it to the HTML body.
-let renderer = new THREE.WebGLRenderer();
+let renderer = new THREE.WebGLRenderer({alpha: true});
 
 // Creates the camera and where it's looking.
-let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 500);
+let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 50000000);
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
@@ -41,7 +42,7 @@ let Width = visibleWidthAtZDepth(6, camera);
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 // Initial scene objects and render call.
-scene.add(light, sph);
+scene.add(light, sph, stars);
 render();
 
 
@@ -193,6 +194,7 @@ document.addEventListener("keydown", keyPressed, true);
 function update(){
     boundCheckX('x', sph.position.x + cometSpeed, sph.position.z, camera, moveComet)
     cometMovement();
+    stars.rotation.x -= 0.0005
     asteroidMovement();
 }
 

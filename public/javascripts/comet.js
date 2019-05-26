@@ -20,10 +20,9 @@ let dirLight = new THREE.SpotLight(0xffffff, .5);
 //      SOME VARIABLES      //
 let cometSpeed = 0;
 let listOfAst = [];
-let colliders = [];
+let astColliders = [];
 let cometCollider = new THREE.Sphere();
 let ast = asteroidGen(200);
-let ast2 = asteroidGen(300);
 let asteroidSpeed = 1;
 //  END OF SOME VARIABLES   //
 //////////////////////////////
@@ -44,11 +43,12 @@ dirLight.position.set(0, 0, 250);
 sph.receiveShadow = true;
 dirLight.target = scene;
 
-let Width = visibleWidthAtZDepth(6, camera);
+let Width =  visibleWidthAtZDepth(sph.position.z, camera);
+let Height = visibleHeightAtZDepth(sph.position.z, camera);
 
 // Last minute sphere configurations
 //   Allows the sphere to properly initialize independent of camera
-sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
+sph.position.y = -Height/2 + 20;
 
 // Initial scene objects and render call.
 scene.add(dirLight, sph, stars);
@@ -85,7 +85,7 @@ function asteroidGen(d){
 
     scene.add(a);
     listOfAst.push(a);
-    colliders.push(coll);
+    astColliders.push(coll);
     document.addEventListener("keydown", keyPressed, true);
     return a;
 }
@@ -100,15 +100,15 @@ function asteroidMovement(){
         listOfAst[i].rotateY(THREE.Math.degToRad(2));
         
 
-        if(listOfAst[i].position.y <= (-(visibleHeightAtZDepth(6, camera) / 2) - 30)){
+        if(listOfAst[i].position.y <= (-(Height / 2) - 30)){
             listOfAst[i].position.y = 70 + Math.random()*10;
             listOfAst[i].position.x = getRandomInt(-Width/2, Width/2);
         }
 
         listOfAst[i].position.y -= asteroidSpeed;
-        colliders[i].center = listOfAst[i].position;
+        astColliders[i].center = listOfAst[i].position;
         
-        if(colliders[i].intersectsSphere(cometCollider)){
+        if(astColliders[i].intersectsSphere(cometCollider)){
             console.log("HIT");
         }
     }
@@ -146,6 +146,9 @@ function keyPressed(e){
 window.addEventListener("resize", ()=>{
     camera.aspect = (window.innerWidth / window.innerHeight);
     camera.updateProjectionMatrix();
+
+    Width =  visibleWidthAtZDepth(sph.position.z, camera);
+    Height = visibleHeightAtZDepth(sph.position.z, camera);
     
     if(verbose) console.log("dim", window.innerWidth)
     if(verbose) console.log("at z:0", visibleWidthAtZDepth(0, camera))

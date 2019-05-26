@@ -18,19 +18,21 @@ let dirLight = new THREE.SpotLight(0xffffff, .5);
 
 //////////////////////////////
 //      SOME VARIABLES      //
-let cometSpeed = 0;
+//        Objects         //
 let listOfAst = [];
 let astColliders = [];
 let cometCollider = new THREE.Sphere();
-let ast = asteroidGen(200);
-let asteroidSpeed = 1;
-//  END OF SOME VARIABLES   //
-//////////////////////////////
 
 // Creates the comet //
 let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
+
+//////////////////////////////
+//       SPEEDS    /// 
+let cometSpeed = 0;
+let asteroidSpeed = 1.4;
+
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -55,6 +57,10 @@ scene.add(dirLight, sph, stars);
 render();
 
 
+// START GAME
+//     by generating asteroids
+asteroidGen(200);
+asteroidGen(200);
 
 // HELPER FUNCTIONS, create an API to interact with utility functions
 function moveComet(speed){
@@ -116,7 +122,7 @@ function asteroidMovement(){
 
 // Rotating any object, given XYZ degrees
 function rotateObject(object, X=0, Y=0, Z=0){
-    ast.rotateX(THREE.Math.degToRad(X));
+    object.rotateX(THREE.Math.degToRad(X));
     object.rotateY(THREE.Math.degToRad(Y));
     object.rotateZ(THREE.Math.degToRad(Z));
 }

@@ -14,7 +14,7 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0xffffff);
-let pointLight = new THREE.PointLight(0xffffff);
+let pointLight = new THREE.PointLight(0xffffff, 0.35);
 
 //////////////////////////////
 //      SOME VARIABLES      //

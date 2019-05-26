@@ -14,7 +14,6 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x404040);
-let dirLight = new THREE.SpotLight(0xffffff, .5);
 
 //////////////////////////////
 //      SOME VARIABLES      //
@@ -35,14 +34,12 @@ let sph = new THREE.Mesh(geo, mat);
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
-camera.position.set(0, 0, 250);
-dirLight.castShadow = true;
-dirLight.receiveShadow = true
-dirLight.shadowDarkness = .35;
-dirLight.position.set(0, 0, 250);
+camera.position.set(0, 0, 250)
 sph.receiveShadow = true;
-dirLight.target = scene;
+sph.castShadow = true;
 
 let Width = visibleWidthAtZDepth(6, camera);
 
@@ -51,7 +48,7 @@ let Width = visibleWidthAtZDepth(6, camera);
 sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
 
 // Initial scene objects and render call.
-scene.add(dirLight, sph, stars);
+scene.add(sph, stars);
 render();
 
 
@@ -80,6 +77,7 @@ function asteroidGen(d){
     a.position.y = 70 + Math.random()*(d/10);
     a.position.x = d * 0.4 * (Math.random() - .5);
     a.receiveShadow = true;
+    a.castShadow = true;
     coll.center = a.position;
     coll.radius = 3;
 

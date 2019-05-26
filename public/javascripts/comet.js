@@ -13,7 +13,8 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
-let light = new THREE.AmbientLight(0x404040);
+let light = new THREE.AmbientLight(0xffffff);
+let pointLight = new THREE.PointLight(0xffffff);
 
 //////////////////////////////
 //      SOME VARIABLES      //
@@ -24,7 +25,7 @@ let cometCollider = new THREE.Sphere();
 
 // Creates the comet //
 let geo = new THREE.SphereGeometry(5, 6, 6);
-let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
+let mat = new THREE.MeshPhongMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
 
 //////////////////////////////
@@ -36,11 +37,15 @@ let asteroidSpeed = 1.4;
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.BasicShadowMap;
 document.body.appendChild(renderer.domElement);
-camera.position.set(0, 0, 250)
+camera.position.set(0, 0, 250);
 sph.receiveShadow = true;
 sph.castShadow = true;
+scene.background = new THREE.Color(0x0f0f0f);
+pointLight.position.set(50, 0, 250);
+pointLight.castShadow = true;
+pointLight.intensity = 0.35;
 
 let Width =  visibleWidthAtZDepth(sph.position.z, camera);
 let Height = visibleHeightAtZDepth(sph.position.z, camera);
@@ -50,7 +55,7 @@ let Height = visibleHeightAtZDepth(sph.position.z, camera);
 sph.position.y = -Height/2 + 20;
 
 // Initial scene objects and render call.
-scene.add(sph, stars);
+scene.add(light, pointLight, sph, stars);
 render();
 
 
@@ -77,7 +82,7 @@ function cometMovement(){
 // Generating a asteroid. TEST //
 function asteroidGen(d){
     let geo = new THREE.SphereGeometry(6, 3, 3);
-    let mat = new THREE.MeshBasicMaterial({color: 0x999999});
+    let mat = new THREE.MeshPhongMaterial({color: 0x999999});
     let a = new THREE.Mesh(geo, mat);
     let coll = new THREE.Sphere();
     a.position.y = 70 + Math.random()*(d/10);

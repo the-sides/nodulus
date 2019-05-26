@@ -1,0 +1,46 @@
+#touch-grid{
+  position: absolute;
+  bottom:0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  opacity: .2;
+
+}
+#left{
+  border:3px solid blue;
+  flex: 1 50%;
+}
+#right{
+  border:3px solid red;
+  flex: 1 50%;
+}
+#hud{
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    justify-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+#hud > div{
+    position: absolute;
+}
+#top-right{
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 20%, 24% 28%);
+    clip-path: polygon(0 0, 100% 0, 100% 20%, 24% 28%);
+    min-height: 100px;
+    min-width: 160px;
+    background-color: green;
+    padding-left: 3em;
+
+    right: 0;
+    top: 0;
+}
+#status{
+    display: none;
+    position: unset !important;
+    text-align: center;
+    color: yellow;
+}

@@ -1,5 +1,6 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} from './utils.js'
 import stars from './background.js'
+import { showHitStatus, hideHitStatus } from './hud.js';
 
 // Debugging variables.
 const debug = true;
@@ -33,6 +34,9 @@ let sph = new THREE.Mesh(geo, mat);
 let cometSpeed = 0;
 let asteroidSpeed = 1.4;
 
+/////////////////////////////////
+//       State Management
+let warning = false;
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -117,8 +121,10 @@ function asteroidMovement(){
         listOfAst[i].position.y -= asteroidSpeed;
         astColliders[i].center = listOfAst[i].position;
         
-        if(astColliders[i].intersectsSphere(cometCollider)){
+        if(astColliders[i].intersectsSphere(cometCollider) && !warning){
             console.log("HIT");
+            showHitStatus();
+            warning = true;
         }
     }
 }
@@ -139,6 +145,8 @@ function keyPressed(e){
         if(k === " "){ // Spacebar
             cometSpeed = 0;
             sph.position.x = 0;
+            hideHitStatus();
+            warning = false;
             return 1;
         }
     }

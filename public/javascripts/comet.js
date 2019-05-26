@@ -17,20 +17,21 @@ let light = new THREE.AmbientLight(0x404040);
 
 //////////////////////////////
 //      SOME VARIABLES      //
-let cometSpeed = 0;
+//        Objects         //
 let listOfAst = [];
-let colliders = [];
+let astColliders = [];
 let cometCollider = new THREE.Sphere();
-let ast = asteroidGen(200);
-let ast2 = asteroidGen(300);
-let asteroidSpeed = 1;
-//  END OF SOME VARIABLES   //
-//////////////////////////////
 
 // Creates the comet //
 let geo = new THREE.SphereGeometry(5, 6, 6);
 let mat = new THREE.MeshBasicMaterial({color: 0x0793AF});
 let sph = new THREE.Mesh(geo, mat);
+
+//////////////////////////////
+//       SPEEDS    /// 
+let cometSpeed = 0;
+let asteroidSpeed = 1.4;
+
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -41,17 +42,22 @@ camera.position.set(0, 0, 250)
 sph.receiveShadow = true;
 sph.castShadow = true;
 
-let Width = visibleWidthAtZDepth(6, camera);
+let Width =  visibleWidthAtZDepth(sph.position.z, camera);
+let Height = visibleHeightAtZDepth(sph.position.z, camera);
 
 // Last minute sphere configurations
 //   Allows the sphere to properly initialize independent of camera
-sph.position.y = -visibleHeightAtZDepth(sph.position.z,camera)/2 + 20;
+sph.position.y = -Height/2 + 20;
 
 // Initial scene objects and render call.
 scene.add(sph, stars);
 render();
 
 
+// START GAME
+//     by generating asteroids
+asteroidGen(200);
+asteroidGen(200);
 
 // HELPER FUNCTIONS, create an API to interact with utility functions
 function moveComet(speed){
@@ -83,7 +89,7 @@ function asteroidGen(d){
 
     scene.add(a);
     listOfAst.push(a);
-    colliders.push(coll);
+    astColliders.push(coll);
     document.addEventListener("keydown", keyPressed, true);
     return a;
 }
@@ -98,15 +104,15 @@ function asteroidMovement(){
         listOfAst[i].rotateY(THREE.Math.degToRad(2));
         
 
-        if(listOfAst[i].position.y <= (-(visibleHeightAtZDepth(6, camera) / 2) - 30)){
+        if(listOfAst[i].position.y <= (-(Height / 2) - 30)){
             listOfAst[i].position.y = 70 + Math.random()*10;
             listOfAst[i].position.x = getRandomInt(-Width/2, Width/2);
         }
 
         listOfAst[i].position.y -= asteroidSpeed;
-        colliders[i].center = listOfAst[i].position;
+        astColliders[i].center = listOfAst[i].position;
         
-        if(colliders[i].intersectsSphere(cometCollider)){
+        if(astColliders[i].intersectsSphere(cometCollider)){
             console.log("HIT");
         }
     }
@@ -114,7 +120,7 @@ function asteroidMovement(){
 
 // Rotating any object, given XYZ degrees
 function rotateObject(object, X=0, Y=0, Z=0){
-    ast.rotateX(THREE.Math.degToRad(X));
+    object.rotateX(THREE.Math.degToRad(X));
     object.rotateY(THREE.Math.degToRad(Y));
     object.rotateZ(THREE.Math.degToRad(Z));
 }
@@ -144,6 +150,9 @@ function keyPressed(e){
 window.addEventListener("resize", ()=>{
     camera.aspect = (window.innerWidth / window.innerHeight);
     camera.updateProjectionMatrix();
+
+    Width =  visibleWidthAtZDepth(sph.position.z, camera);
+    Height = visibleHeightAtZDepth(sph.position.z, camera);
     
     if(verbose) console.log("dim", window.innerWidth)
     if(verbose) console.log("at z:0", visibleWidthAtZDepth(0, camera))

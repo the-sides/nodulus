@@ -36,4 +36,8 @@ function getRandomInt(min, max){
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
-export {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt}
+function collisionDetection(obj1, obj2){
+  return obj1.intersectsSphere(obj2);
+}
+
+export {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt, collisionDetection}

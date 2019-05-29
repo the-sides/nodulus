@@ -1,6 +1,7 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} from './utils.js'
 import stars from './background.js'
 import { showHitStatus, hideHitStatus } from './hud.js';
+import gameConfig from './states.js'
 
 // Debugging variables.
 const debug = true;

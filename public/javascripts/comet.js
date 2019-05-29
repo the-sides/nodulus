@@ -2,6 +2,7 @@ import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt} 
 import stars from './background.js'
 import { showHitStatus, hideHitStatus } from './hud.js';
 import gameConfig from './states.js'
+import Asteroid from './components.js'
 
 // Debugging variables.
 const debug = true;
@@ -11,7 +12,7 @@ const verbose = false;
 let renderer = new THREE.WebGLRenderer({alpha: true});
 
 // Creates the camera and where it's looking.
-let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 50000000);
+let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 5000);
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
@@ -38,6 +39,8 @@ let asteroidSpeed = 1.4;
 /////////////////////////////////
 //       State Management
 let warning = false;
+const config = new gameConfig();
+let crntLevel = 1;
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -66,8 +69,18 @@ render();
 
 // START GAME
 //     by generating asteroids
-asteroidGen(200);
-asteroidGen(200);
+function initGame(){
+    asteroidSpeed = config.LevelConfigs[crntLevel].astSpeed
+    for(let i = 0; i < config.LevelConfigs[crntLevel].astN; i++){
+        console.log("gen after", config.LevelConfigs[crntLevel].astDelays[i])
+        setTimeout(()=>asteroidGen(
+            config.LevelConfigs[crntLevel].astAngle
+        ), config.LevelConfigs[crntLevel].astDelays[i]);
+    }
+}
+initGame()
+let ast1 = new Asteroid();
+ast1.moveAst();
 
 // HELPER FUNCTIONS, create an API to interact with utility functions
 function moveComet(speed){
@@ -85,18 +98,11 @@ function cometMovement(){
 }
 
 // Generating a asteroid. TEST //
-function asteroidGen(d){
-    let geo = new THREE.SphereGeometry(6, 3, 3);
-    let mat = new THREE.MeshPhongMaterial({color: 0x999999});
-    let a = new THREE.Mesh(geo, mat);
-    let coll = new THREE.Sphere();
-    a.position.y = 70 + Math.random()*(d/10);
-    a.position.x = d * 0.4 * (Math.random() - .5);
-    a.receiveShadow = true;
-    a.castShadow = true;
-    coll.center = a.position;
-    coll.radius = 3;
+function asteroidGen(angle){
 
+    let ast = new Asteroid();
+    let a = ast.getModel()
+    let coll = ast.getCollider()
     scene.add(a);
     listOfAst.push(a);
     astColliders.push(coll);

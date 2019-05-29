@@ -1,6 +1,7 @@
 class LevelConfig {
-    constructor(numAsteroids, astSpeed, astAngle){
-       this.numAsteroids = numAsteroids;
+    constructor(astN, astDelays, astSpeed, astAngle){
+       this.astN = astN; // Number of asteroids to generate
+       this.astDelays = astDelays;
        this.astSpeed = astSpeed; 
        this.astAngle = astAngle
     }
@@ -9,14 +10,12 @@ class LevelConfig {
 class GameConfig {
     constructor(){
         this.LevelConfigs = {
-            1 : new LevelConfig(5, 1, 0)
+            1 : new LevelConfig(2, [0, 2000], 1, 0)
         };
 
     }
 
 };
 
-config = new GameConfig();
-console.log(config.LevelConfigs[1].numAsteroids)
 
 export default GameConfig;

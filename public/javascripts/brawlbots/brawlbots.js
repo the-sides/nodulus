@@ -22,11 +22,11 @@ let scene = new THREE.Scene();
 let pointLight = new THREE.PointLight(0xffffff, 0.35);
 
 // Game Config
-gameData[gameConfig] = undefined; // TODO
-gameData[gameState] = {
+gameData.gameConfig = undefined; // TODO
+gameData.gameState = {
         animation: 'none',
         players: {
-            p1: new Brawler(),
+            p1: undefined// new Brawler(),
         }
     }
 
@@ -50,9 +50,11 @@ var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.update();
 
 // Fetch some models and set the scene
-const fighter = new Brawler();
+let fighter = new Brawler();
+gameData.gameState.players.p1 = fighter;
 
 scene.add(fighter.model);
+
 scene.add(pointLight);
 
 render();
@@ -65,24 +67,31 @@ window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-function inputManagement(event) {
-    // This 
-    gameState.movement = inputController[event.type](event, gameState)
+function inputManagement(event, gamedata) {
+    // Use this function to cherrypick the parameters that need to 
+    //   pass with the input controller function
+    gameData = inputController[event.type](event, gamedata);
 }
 
-window.addEventListener('keydown', (e) => inputManagement(e));
-window.addEventListener('keyup', (e) => inputManagement(e));
-// window.addEventListener('keyup', inputController.keyup);
+// Avoid repetitions!!! todo
+window.addEventListener('keydown', (e) => inputManagement(e, gameData));
+window.addEventListener('keyup', (e) => inputManagement(e, gameData));
+
 /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
 //                NOW KEEP PLAYING!
 //
 //    UPDATE AND RENDER
-// console.log(type)
+function sceneMovement(){
+    if(gameData.gameState.animation !== 'none'){
+        console.log("Player 1 moving", gameData.gameState.players.p1.movement);
+    }
+}
 
 // Changes the scene objects.
 function update() {
     controls.update();
+    sceneMovement();
 }
 
 // Renders the changed scene objects.

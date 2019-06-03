@@ -113,6 +113,8 @@ class Brawler {
         this.model = new THREE.Mesh(geo, mat);
         this.model.receiveShadow = true;
         this.model.castShadow = true
+
+        this.movement = 'none'
     }
 }
 

@@ -156,11 +156,8 @@ function update(){
     sceneMovement();
     stars.rotation.x -= 0.0005
 }
-setInterval(()=>{
-    asteroids.forEach(ast=>{
-        ast.printAst();
-    })
-},2000)
+
+
 // Renders the changed scene objects.
 function render(){
     requestAnimationFrame(render); // This tells the browser we want to do animations.

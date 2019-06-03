@@ -11,7 +11,11 @@ router.get('/comet',function(req, res, next){
 });
 
 router.get('/test',function(req, res, next){
-  res.render('testEnv', { title: 'Testing Env' });
+  res.render('testEnv', { title: 'testing env' });
+});
+
+router.get('/brawlbots',function(req, res, next){
+  res.render('brawlbots', { title: 'Brawl Bots' });
 });
 
 module.exports = router;

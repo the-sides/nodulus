@@ -1,9 +1,17 @@
 import { getRandomInt } from "./utils.js";
 
+class SpaceJunk{
+    move(){
+        this.model.position.x += this.velX;
+        this.model.position.y += this.velY;
 
-class Comet{
+        // Bind collider's position with model's position
+        this.collider.center = this.model.position;
+    }
+}
+class Comet extends SpaceJunk{
     constructor(){
-        // Creates the comet //
+        super()
         let geo = new THREE.SphereGeometry(5, 6, 6);
         let mat = new THREE.MeshPhongMaterial({color: 0x0793AF});
         let sph = new THREE.Mesh(geo, mat);
@@ -24,17 +32,12 @@ class Comet{
 
     getModel(){ return this.model;}
     getPos(){ return this.model.position;}
+
     setPosX(newX){ this.model.position.x = newX;}
-    setVelX(newX){ this.velX = newX;}
     setPosY(newY){ this.model.position.y = newY;}
+    setVelX(newX){ this.velX = newX;}
+    setVelY(newY){ this.velY = newY;}
 
-    move(){
-        this.model.position.x += this.velX;
-        this.model.position.y += this.velY;
-
-        // Bind collider's position with model's position
-        this.collider.center = this.model.position;
-    }
 }
 
 

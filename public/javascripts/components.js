@@ -1,7 +1,7 @@
 import { getRandomInt } from "./utils.js";
 
-class SpaceJunk{
-    move(){
+class SpaceJunk {
+    move() {
         this.model.position.x += this.velX;
         this.model.position.y += this.velY;
 
@@ -9,11 +9,11 @@ class SpaceJunk{
         this.collider.center = this.model.position;
     }
 }
-class Comet extends SpaceJunk{
-    constructor(){
+class Comet extends SpaceJunk {
+    constructor() {
         super()
         let geo = new THREE.SphereGeometry(5, 6, 6);
-        let mat = new THREE.MeshPhongMaterial({color: 0x0793AF});
+        let mat = new THREE.MeshPhongMaterial({ color: 0x0793AF });
         let sph = new THREE.Mesh(geo, mat);
         let coll = new THREE.Sphere();
 
@@ -28,25 +28,25 @@ class Comet extends SpaceJunk{
 
         this.velX = 0;
         this.velY = 0;
-    } 
+    }
 
-    getModel(){ return this.model;}
-    getPos(){ return this.model.position;}
+    getModel() { return this.model; }
+    getPos() { return this.model.position; }
 
-    setPosX(newX){ this.model.position.x = newX;}
-    setPosY(newY){ this.model.position.y = newY;}
-    setVelX(newX){ this.velX = newX;}
-    setVelY(newY){ this.velY = newY;}
+    setPosX(newX) { this.model.position.x = newX; }
+    setPosY(newY) { this.model.position.y = newY; }
+    setVelX(newX) { this.velX = newX; }
+    setVelY(newY) { this.velY = newY; }
 
 }
 
 
 
 class Asteroid {
-    constructor(screenWidth, screenHeight, speed){
+    constructor(screenWidth, screenHeight, speed) {
         // Create models and three.js bullshit
         let geo = new THREE.SphereGeometry(6, 3, 3);
-        let mat = new THREE.MeshPhongMaterial({color: 0x999999});
+        let mat = new THREE.MeshPhongMaterial({ color: 0x999999 });
         let ast = new THREE.Mesh(geo, mat);
         let coll = new THREE.Sphere();
 
@@ -67,7 +67,7 @@ class Asteroid {
         this.spinX = getRandomInt(1, 8);
         this.spinY = getRandomInt(1, 8);
     }
-    move(){
+    move() {
         this.model.position.x += this.velX;
         this.model.position.y += this.velY;
 
@@ -78,28 +78,42 @@ class Asteroid {
         this.collider.center = this.model.position;
     }
 
-    getModel(){ return this.model }
-    getCollider(){ return this.collider }
-    setVelY(newVelocity){return this.velY = newVelocity;}
-    
-    initPosition(Width, Height){
+    getModel() { return this.model }
+    getCollider() { return this.collider }
+    setVelY(newVelocity) { return this.velY = newVelocity; }
+
+    initPosition(Width, Height) {
         console.log("position initalized")
         this.model.position.y = (Height / 2) + Math.random() * 50;
-        this.model.position.x = getRandomInt(-Width/2, Width/2);
+        this.model.position.x = getRandomInt(-Width / 2, Width / 2);
         this.model.position.z = 10
         this.collider.center = this.model.position;
     }
 
-    fellOff(screenWidth, screenHeight){
-        if(this.model.position.y <= (-(screenHeight / 2) - 30)){
+    fellOff(screenWidth, screenHeight) {
+        if (this.model.position.y <= (-(screenHeight / 2) - 30)) {
             this.initPosition(screenWidth, screenHeight)
         }
     }
 
-    printAst(){
+    printAst() {
         console.log("Position:", this.model.position);
         console.log("Velocity: x=", this.velX, " y=", this.velY);
     }
 }
 
-export {Comet, Asteroid};
+
+class Brawler {
+    constructor() {
+        let geo = new THREE.BoxGeometry(1.0, 1.4, 0.8);
+        let mat = new THREE.MeshPhongMaterial({ 
+                                    color: 0xffffff, 
+                                    wireframe:true,
+                                });
+        this.model = new THREE.Mesh(geo, mat);
+        this.model.receiveShadow = true;
+        this.model.castShadow = true
+    }
+}
+
+export { Comet, Asteroid, Brawler };

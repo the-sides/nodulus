@@ -1,5 +1,6 @@
 import { Brawler } from '../components.js'
 import inputController from './inputController.js'
+import generateAnimations from './animation.js';
 
 // Game Data
 //    I'll need to be passing information between functions and scopes, 
@@ -22,9 +23,13 @@ let scene = new THREE.Scene();
 let pointLight = new THREE.PointLight(0xffffff, 0.35);
 
 // Game Config
-gameData.gameConfig = undefined; // TODO
+gameData.gameConfig = {
+    animations: undefined//generateAnimations(),
+}
+
 gameData.gameState = {
         animation: 'none',
+        clock: new THREE.Clock(),
         players: {
             p1: undefined// new Brawler(),
         }
@@ -84,7 +89,14 @@ window.addEventListener('keyup', (e) => inputManagement(e, gameData));
 //    UPDATE AND RENDER
 function sceneMovement(){
     if(gameData.gameState.animation !== 'none'){
-        console.log("Player 1 moving", gameData.gameState.players.p1.movement);
+        console.log('moving');
+        // console.log("Player 1 moving", gameData.gameState.players.p1.movement);
+        // if(gameData.gameState.players.p1.movement === 'left'){
+        //     gameData.gameConfig.animations.movements.left(
+        //         gameData.gameState.players.p1.model,
+        //         gameData.gameState.animation
+        //     )
+        // }
     }
 }
 
@@ -92,6 +104,7 @@ function sceneMovement(){
 function update() {
     controls.update();
     sceneMovement();
+    // gameData.gameState.players.p1.model.position.x -= 0.1;
 }
 
 // Renders the changed scene objects.

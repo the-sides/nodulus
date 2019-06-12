@@ -1,8 +1,8 @@
 const elm = document.getElementById('status');
 
-function showHitStatus(){
+function showHitStatus(message){
     console.log("hit status sent")
-    elm.textContent = 'you fucking suck'
+    elm.textContent = message;
     elm.style.display = 'block'
     setTimeout(hideHitStatus, 2000)
 }

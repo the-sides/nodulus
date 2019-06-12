@@ -28,6 +28,7 @@ let pointLight = new THREE.PointLight(0xffffff, 0.35);
 //      GAME MANAGER       ///// 
 const config = new gameConfig();
 let crntLevel = 1;
+let colliderThrottle = false;
 
 //////////////////////
 //   Containers    //
@@ -66,7 +67,7 @@ for(let i = 0; i < config.LevelConfigs[crntLevel].astN; i++){
             asteroids.push(ast)
             scene.add(ast.getModel())
         },
-        config.LevelConfigs[crntLevel].astDelays[i]
+        config.LevelConfigs[crntLevel].astDelays * i
     );
 }
 
@@ -78,10 +79,13 @@ comet.setPosY(-Height/2 + 20)
 
 // Initial scene objects and render call.
 scene.add(light, pointLight, comet.getModel(), stars)
+const removeFromScene= function(model){
+    scene.remove(model);
+    console.log("REMOVED");
+}
 
 document.body.appendChild(renderer.domElement);
 render();
-
 
 
 // Move objects in scene, checking relationship of new positions
@@ -89,9 +93,21 @@ function sceneMovement(){
 
     asteroids.forEach(ast => {
         ast.move()
-        ast.fellOff(Width, Height)
+        ast.fellOff(Width, Height, config.waveCount, removeFromScene)
+
+        if(!colliderThrottle && ast.collisionDetect(comet)){
+            colliderThrottle = true;
+            comet.setVelX(0);
+            // Game Over
+            showHitStatus("GAME OVER");
+            setTimeout(()=>{colliderThrottle = false}, 1000);
+        }
     })
-    comet.move()
+    if(!boundCheckX('x', comet.getPos().x, comet.getPos().z, camera)){
+        comet.setVelX(0);
+        showHitStatus("GAME OVER");
+    }        
+    comet.move();
 
 }
 
@@ -107,17 +123,20 @@ function keyPressed(e){
 
     if(debug){
         if(k === " "){ // Spacebar
-            comet.setVelX(0)
+            comet.setVelX(0);
             comet.setPosX(0);
+            comet.setSpinX(0);
             hideHitStatus();
             return 1;
         }
     }
     if(k === "ArrowLeft"){
-        comet.setVelX(-0.5)
+        comet.setVelX(-0.5);
+        comet.setSpinX(-1.5);
     }
     else if(k === "ArrowRight"){
-        comet.setVelX(0.5)
+        comet.setVelX(0.5);
+        comet.setSpinX(1.5);
     }
     if(verbose) console.log(k, '|', e.keyCode);
 }

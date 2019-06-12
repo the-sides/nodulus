@@ -16,7 +16,7 @@ const visibleWidthAtZDepth = ( depth, camera ) => {
   return height * camera.aspect;
 };
 
-function boundCheckX(dimension, suspectPos, depth, inCamera, cometSpeedFunc){
+function boundCheckX(dimension, suspectPos, depth, inCamera){
     let limit = undefined;
     if(dimension == 'x')
         limit = visibleWidthAtZDepth(depth, inCamera)/2 - 5 ;
@@ -27,7 +27,9 @@ function boundCheckX(dimension, suspectPos, depth, inCamera, cometSpeedFunc){
 
 
     if( Math.abs(suspectPos) > limit)
-        cometSpeedFunc(0);
+        return false;   // Failed bound check. 
+    else
+      return true;      // Passed bound check.
 }
 
 function getRandomInt(min, max){

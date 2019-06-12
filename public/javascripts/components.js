@@ -5,8 +5,15 @@ class SpaceJunk {
         this.model.position.x += this.velX;
         this.model.position.y += this.velY;
 
+        this.model.rotateX(THREE.Math.degToRad(this.spinX));
+        this.model.rotateY(THREE.Math.degToRad(this.spinY));
+
         // Bind collider's position with model's position
         this.collider.center = this.model.position;
+    }
+
+    collisionDetect(otherObject) {
+        return this.collider.intersectsSphere(otherObject.collider);
     }
 }
 class Comet extends SpaceJunk {
@@ -28,6 +35,9 @@ class Comet extends SpaceJunk {
 
         this.velX = 0;
         this.velY = 0;
+
+        this.spinX = 0.0;
+        this.spinY = 3.0;
     }
 
     getModel() { return this.model; }
@@ -37,13 +47,16 @@ class Comet extends SpaceJunk {
     setPosY(newY) { this.model.position.y = newY; }
     setVelX(newX) { this.velX = newX; }
     setVelY(newY) { this.velY = newY; }
+    setSpinX(newX) { this.spinX = newX; }
+    setSpinY(newY) { this.spinY = newY; }
 
 }
 
 
 
-class Asteroid {
+class Asteroid extends SpaceJunk{
     constructor(screenWidth, screenHeight, speed) {
+        super()
         // Create models and three.js bullshit
         let geo = new THREE.SphereGeometry(6, 3, 3);
         let mat = new THREE.MeshPhongMaterial({ color: 0x999999 });
@@ -66,16 +79,8 @@ class Asteroid {
 
         this.spinX = getRandomInt(1, 8);
         this.spinY = getRandomInt(1, 8);
-    }
-    move() {
-        this.model.position.x += this.velX;
-        this.model.position.y += this.velY;
 
-        this.model.rotateX(THREE.Math.degToRad(this.spinX));
-        this.model.rotateY(THREE.Math.degToRad(this.spinY));
-
-        // Bind collider's position with model's position
-        this.collider.center = this.model.position;
+        this.passes = 0;
     }
 
     getModel() { return this.model }
@@ -90,9 +95,13 @@ class Asteroid {
         this.collider.center = this.model.position;
     }
 
-    fellOff(screenWidth, screenHeight) {
+    fellOff(screenWidth, screenHeight, waveCount, removeFunc) {
         if (this.model.position.y <= (-(screenHeight / 2) - 30)) {
             this.initPosition(screenWidth, screenHeight)
+            this.passes += 1;
+            if(this.passes === waveCount){
+                removeFunc(this.model);
+            }
         }
     }
 

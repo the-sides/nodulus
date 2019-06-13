@@ -55,7 +55,7 @@ class Comet extends SpaceJunk {
 
 
 class Asteroid extends SpaceJunk{
-    constructor(screenWidth, screenHeight, speed) {
+    constructor(screenWidth, screenHeight, speed, waveCount, listIndice) {
         super()
         // Create models and three.js bullshit
         let geo = new THREE.SphereGeometry(6, 3, 3);
@@ -80,7 +80,8 @@ class Asteroid extends SpaceJunk{
         this.spinX = getRandomInt(1, 8);
         this.spinY = getRandomInt(1, 8);
 
-        this.passes = 0;
+        this.wavePasses = waveCount;
+        this.listIndex = listIndice;
     }
 
     getModel() { return this.model }
@@ -95,13 +96,17 @@ class Asteroid extends SpaceJunk{
         this.collider.center = this.model.position;
     }
 
-    fellOff(screenWidth, screenHeight, waveCount, removeFunc) {
+    fellOff(screenWidth, screenHeight, removeFunc) {
         if (this.model.position.y <= (-(screenHeight / 2) - 30)) {
             this.initPosition(screenWidth, screenHeight)
-            this.passes += 1;
-            if(this.passes === waveCount){
-                removeFunc(this.model);
+            this.wavePasses -= 1;
+            if(this.wavePasses <= 0){
+                removeFunc(this);
+                // delete this.model;
+                // delete this.collider;
+                return true;
             }
+            else return false;
         }
     }
 

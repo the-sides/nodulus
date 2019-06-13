@@ -9,8 +9,8 @@ const debug = true;
 const verbose = false;
 
 
-////////////////////////////////////////////////
-//////   RENDERING AND GAME SCENE    //////////
+///* ///////////////////////////////////////////*/
+//* //   RENDERING AND GAME SCENE    //////////*/
 
 // Creates the renderer in Three.js and adds it to the HTML body.
 let renderer = new THREE.WebGLRenderer({alpha: true});
@@ -34,8 +34,8 @@ let colliderThrottle = false;
 //   Containers    //
 let asteroids = [];
 
-////////////////////////////////
-////     Game Objects   ///////
+//* ////////////////////////////
+//* /    Game Objects   ///////
 const comet = new Comet();
 
 
@@ -61,7 +61,9 @@ for(let i = 0; i < config.LevelConfigs[crntLevel].astN; i++){
             const ast = new Asteroid(
                 Width, 
                 Height, 
-                config.LevelConfigs[crntLevel].astSpeed
+                config.LevelConfigs[crntLevel].astSpeed,
+                config.LevelConfigs[crntLevel].waveCount,
+                i
             )
             
             asteroids.push(ast)
@@ -79,9 +81,10 @@ comet.setPosY(-Height/2 + 20)
 
 // Initial scene objects and render call.
 scene.add(light, pointLight, comet.getModel(), stars)
-const removeFromScene= function(model){
-    scene.remove(model);
-    console.log("REMOVED");
+const removeFromScene = function(obj){
+    scene.remove(obj.getModel());
+    asteroids.splice(obj.listIndex, 1)
+    console.log(`Asteroids left: ${asteroids.listIndex} after ${obj.listIndex} passed`);
 }
 
 document.body.appendChild(renderer.domElement);
@@ -89,11 +92,14 @@ render();
 
 
 // Move objects in scene, checking relationship of new positions
-function sceneMovement(){
+function sceneMovement(asts){
 
-    asteroids.forEach(ast => {
+    if(asts.length === 0) return true;
+    asts.forEach(ast => {
         ast.move()
-        ast.fellOff(Width, Height, config.waveCount, removeFromScene)
+        
+        // return true once ast passes wave count
+        if(ast.fellOff(Width, Height, removeFromScene))
 
         if(!colliderThrottle && ast.collisionDetect(comet)){
             colliderThrottle = true;
@@ -172,7 +178,7 @@ document.addEventListener("keydown", keyPressed, true);
 // Changes the scene objects.
 function update(){
     // boundCheckX('x', comet.getPos().x + comet.velX, comet.getPos().z, camera)
-    sceneMovement();
+    sceneMovement(asteroids);
     stars.rotation.x -= 0.0005
 }
 

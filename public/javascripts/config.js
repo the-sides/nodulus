@@ -10,7 +10,7 @@ class LevelConfig {
 class GameConfig {
     constructor(){
         this.LevelConfigs = {
-            1 : new LevelConfig(10, 50, 1, 2)
+            1 : new LevelConfig(3, 200, 1.8, 2)
         };
 
     }

@@ -1,6 +1,6 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt, collisionDetection} from './utils.js'
 import stars from './background.js'
-import { showHitStatus, hideHitStatus } from './hud.js';
+import { showMessage, hideMessage } from './hud.js';
 import gameConfig from './config.js'
 import {Comet, Asteroid } from './components.js'
 
@@ -9,7 +9,7 @@ const debug = true;
 const verbose = false;
 
 
-///* ///////////////////////////////////////////*/
+//*  ////////////////////////////////////////////*/
 //* //   RENDERING AND GAME SCENE    //////////*/
 
 // Creates the renderer in Three.js and adds it to the HTML body.
@@ -20,17 +20,20 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
-let light = new THREE.AmbientLight(0xffffff);
-let pointLight = new THREE.PointLight(0xffffff, 0.35);
+let light = new THREE.AmbientLight(0x999999);
+let pointLight = new THREE.PointLight(0x999999, 1);
+let pointLight2 = new THREE.PointLight(0x999999, 1);
 
 
-/////////////////////////////////
-//      GAME MANAGER       ///// 
-const config = new gameConfig();
-let crntLevel = 1;
+//* //////////////////////////////
+//      GAME MANAGER       //* // 
+const config = new gameConfig(1);
+// const urlParams = new URLSearchParams(window.location.search)
+
+//// let crntLevel = 1;
 let colliderThrottle = false;
 
-//////////////////////
+//* ///////////////////
 //   Containers    //
 let asteroids = [];
 
@@ -48,30 +51,40 @@ camera.position.set(0, 0, 250);
 
 scene.background = new THREE.Color(0x0f0f0f);
 
-pointLight.position.set(50, 0, 250);
+pointLight.position.set(50, 20, 60);
 pointLight.castShadow = true;
-pointLight.intensity = 0.35;
+pointLight.intensity = 0.75;
+pointLight2.position.set(-50, -20, 60);
+pointLight2.castShadow = true;
+pointLight2.intensity = 0.75;
+light.intensity = 0.2
 
 let Width =  visibleWidthAtZDepth(comet.getPos().z, camera);
 let Height = visibleHeightAtZDepth(comet.getPos().z, camera);
 
-for(let i = 0; i < config.LevelConfigs[crntLevel].astN; i++){
-    setTimeout(
-        function(){
-            const ast = new Asteroid(
-                Width, 
-                Height, 
-                config.LevelConfigs[crntLevel].astSpeed,
-                config.LevelConfigs[crntLevel].waveCount,
-                i
-            )
-            
-            asteroids.push(ast)
-            scene.add(ast.getModel())
-        },
-        config.LevelConfigs[crntLevel].astDelays * i
-    );
+function generateAsteroids(){
+    asteroids = [];
+    for(let i = 0; i < config.LevelConfigs.astN; i++){
+        setTimeout(
+            function(){
+                const ast = new Asteroid(
+                    Width, 
+                    Height, 
+                    config.LevelConfigs.astSpeed,
+                    config.LevelConfigs.waveCount,
+                    i
+                )
+                
+                asteroids.push(ast)
+                scene.add(ast.getModel())
+                config.gameState.waitingForAsts = false;
+            },
+            config.LevelConfigs.astDelays * i
+        );
+    }
 }
+
+generateAsteroids();
 
 // Last minute sphere configurations
 //   Allows the sphere to properly initialize independent of camera
@@ -80,11 +93,12 @@ comet.setPosY(-Height/2 + 20)
 
 
 // Initial scene objects and render call.
-scene.add(light, pointLight, comet.getModel(), stars)
-const removeFromScene = function(obj){
+scene.add(light, pointLight,pointLight2, comet.getModel(), stars)
+const removeAsteroids = function(obj){
     scene.remove(obj.getModel());
-    asteroids.splice(obj.listIndex, 1)
-    console.log(`Asteroids left: ${asteroids.listIndex} after ${obj.listIndex} passed`);
+    delete asteroids[obj.listIndex]
+    config.gameState.astsPassed += 1;
+    console.log(`Asteroids left: ${asteroids.length - config.gameState.astsPassed} after ${obj.listIndex} passed`);
 }
 
 document.body.appendChild(renderer.domElement);
@@ -94,27 +108,36 @@ render();
 // Move objects in scene, checking relationship of new positions
 function sceneMovement(asts){
 
-    if(asts.length === 0) return true;
+    if(asts.length === config.gameState.astsPassed && !config.gameState.waitingForAsts) {
+        //* Reset game for next level
+        config.completedLevel();
+        // generateAsteroids(scene, asteroids)
+    }
+
     asts.forEach(ast => {
         ast.move()
         
         // return true once ast passes wave count
-        if(ast.fellOff(Width, Height, removeFromScene))
+        if(ast.fellOff(Width, Height, removeAsteroids))
+            config.addPoints(50)
 
         if(!colliderThrottle && ast.collisionDetect(comet)){
             colliderThrottle = true;
             comet.setVelX(0);
             // Game Over
-            showHitStatus("GAME OVER");
+            showMessage("GAME OVER");
             setTimeout(()=>{colliderThrottle = false}, 1000);
         }
     })
     if(!boundCheckX('x', comet.getPos().x, comet.getPos().z, camera)){
         comet.setVelX(0);
-        showHitStatus("GAME OVER");
+        comet.setPosX(0); // to prevent from running too much
+        showMessage("GAME OVER");
     }        
+
     comet.move();
 
+    stars.rotation.x -= 0.0005
 }
 
 
@@ -132,17 +155,17 @@ function keyPressed(e){
             comet.setVelX(0);
             comet.setPosX(0);
             comet.setSpinX(0);
-            hideHitStatus();
+            hideMessage();
             return 1;
         }
     }
     if(k === "ArrowLeft"){
         comet.setVelX(-0.5);
-        comet.setSpinX(-1.5);
+        comet.setSpinX(-0.2);
     }
     else if(k === "ArrowRight"){
         comet.setVelX(0.5);
-        comet.setSpinX(1.5);
+        comet.setSpinX(0.2);
     }
     if(verbose) console.log(k, '|', e.keyCode);
 }
@@ -179,7 +202,6 @@ document.addEventListener("keydown", keyPressed, true);
 function update(){
     // boundCheckX('x', comet.getPos().x + comet.velX, comet.getPos().z, camera)
     sceneMovement(asteroids);
-    stars.rotation.x -= 0.0005
 }
 
 

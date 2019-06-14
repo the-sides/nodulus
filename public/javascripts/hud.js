@@ -1,13 +1,12 @@
 const elm = document.getElementById('status');
 
-function showHitStatus(message){
-    console.log("hit status sent")
+function showMessage(message){
     elm.textContent = message;
     elm.style.display = 'block'
-    setTimeout(hideHitStatus, 2000)
+    setTimeout(hideMessage, 3000)
 }
-function hideHitStatus(){
+function hideMessage(){
     elm.style.display = 'none'
 }
 
-export {showHitStatus, hideHitStatus};
+export {showMessage, hideMessage};

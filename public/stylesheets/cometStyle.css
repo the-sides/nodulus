@@ -5,12 +5,13 @@
   width: 100%;
   display: flex;
   opacity: 0.2;
+  z-index: 5;
 }
 a.btn__return{
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 9;
 }
 #left{
   border:3px solid blue;

@@ -37,7 +37,7 @@ class Comet extends SpaceJunk {
         this.velY = 0;
 
         this.spinX = 0.0;
-        this.spinY = 3.0;
+        this.spinY = 0.3;
     }
 
     getModel() { return this.model; }

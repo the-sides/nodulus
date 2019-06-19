@@ -11,10 +11,16 @@ class LevelConfig {
 function generateLevelConfig(levelNum){
     // TODO: Make this process way better
     const levels = {
-            1 : new LevelConfig(3, 290, 1.8, 2), 
-            2 : new LevelConfig(5, 100, 2.8, 2), 
+            1 : new LevelConfig(1, 290, 1.8, 2), 
+            2 : new LevelConfig(2, 100, 2.8, 2), 
         };
-    return levels[levelNum]
+    
+    if (levels.length + 1 === levelNum) {
+        return false;
+    }
+    else {
+        return levels[levelNum];
+    }
 }
 class GameConfig {
     constructor(level){
@@ -34,10 +40,6 @@ class GameConfig {
     }
     completedLevel(astGenerator){
         showMessage(`Congrats, moving onto level ${this.gameState.crntLevel + 1}`)
-        setTimeout(()=>{
-            console.log('generating asteroids')
-            astGenerator()
-        }, 2000)
         // if(messageUp) 
             // clear messages
         this.gameState.messageUp = false;
@@ -45,9 +47,22 @@ class GameConfig {
         this.gameState.waitingForAsts = true
         this.gameState.crntLevel += 1;
         this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
+
+        console.log(`At level ${this.gameState.crntLevel}`, this.LevelConfig)
+        // Check for max level
+        if(this.LevelConfig === undefined){
+            showMessage("You beat the game, we didn't write more levels")
+            return;
+            this.gameState.crntLevel -= 1;
+            this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
+        }
+        setTimeout(()=>{
+            console.log('generating asteroids')
+            astGenerator()
+        }, 2000)
     }
 
 };
 
 
-export default GameConfig;
+export default GameConfig

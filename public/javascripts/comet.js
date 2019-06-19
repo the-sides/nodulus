@@ -64,14 +64,14 @@ let Height = visibleHeightAtZDepth(comet.getPos().z, camera);
 
 function generateAsteroids(){
     asteroids = [];
-    for(let i = 0; i < config.LevelConfigs.astN; i++){
+    for(let i = 0; i < config.LevelConfig.astN; i++){
         setTimeout(
             function(){
                 const ast = new Asteroid(
                     Width, 
                     Height, 
-                    config.LevelConfigs.astSpeed,
-                    config.LevelConfigs.waveCount,
+                    config.LevelConfig.astSpeed,
+                    config.LevelConfig.waveCount,
                     i
                 )
                 
@@ -79,7 +79,7 @@ function generateAsteroids(){
                 scene.add(ast.getModel())
                 config.gameState.waitingForAsts = false;
             },
-            config.LevelConfigs.astDelays * i
+            config.LevelConfig.astDelays * i
         );
     }
 }
@@ -110,7 +110,7 @@ function sceneMovement(asts){
 
     if(asts.length === config.gameState.astsPassed && !config.gameState.waitingForAsts) {
         //* Reset game for next level
-        config.completedLevel();
+        config.completedLevel(generateAsteroids);
         // generateAsteroids(scene, asteroids)
     }
 

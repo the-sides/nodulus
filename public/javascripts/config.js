@@ -11,7 +11,8 @@ class LevelConfig {
 function generateLevelConfig(levelNum){
     // TODO: Make this process way better
     const levels = {
-            1 : new LevelConfig(3, 290, 1.8, 2)
+            1 : new LevelConfig(3, 290, 1.8, 2), 
+            2 : new LevelConfig(5, 100, 2.8, 2), 
         };
     return levels[levelNum]
 }
@@ -25,22 +26,25 @@ class GameConfig {
             astsPassed: 0,
         }
 
-        this.LevelConfigs = generateLevelConfig(level);
+        this.LevelConfig = generateLevelConfig(level);
     }
 
     addPoints(earned){
         this.points += earned;
     }
     completedLevel(astGenerator){
-        this.gameState.crntLevel += 1;
-        showMessage(`Congrats, moving onto level ${this.gameState.crntLevel}`)
-        this.gameState.waitingForAsts = true;
+        showMessage(`Congrats, moving onto level ${this.gameState.crntLevel + 1}`)
         setTimeout(()=>{
             console.log('generating asteroids')
-            // astGenerator
-            
-        }, 3000)
-
+            astGenerator()
+        }, 2000)
+        // if(messageUp) 
+            // clear messages
+        this.gameState.messageUp = false;
+        this.gameState.astsPassed = 0; 
+        this.gameState.waitingForAsts = true
+        this.gameState.crntLevel += 1;
+        this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
     }
 
 };

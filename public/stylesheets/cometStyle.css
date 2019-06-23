@@ -46,6 +46,19 @@ a.btn__return{
     -webkit-user-drag: none;
     -moz-window-dragging: none;
 }
+#bottom-right{
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 20%, 24% 28%);
+    clip-path: polygon(0 0, 100% 0, 100% 20%, 24% 28%);
+    min-height: 100px;
+    min-width: 160px;
+    background-color: green;
+    padding-left: 3em;
+
+    right: 0;
+    bottom: 0;
+    -webkit-user-drag: none;
+    -moz-window-dragging: none;
+}
 #status{
     display: none;
     position: unset !important;

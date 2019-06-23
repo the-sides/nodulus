@@ -36,6 +36,7 @@ let colliderThrottle = false;
 //* ///////////////////
 //   Containers    //
 let asteroids = [];
+let boundaryBelt = [];
 
 //* ////////////////////////////
 //* /    Game Objects   ///////
@@ -100,6 +101,10 @@ const removeAsteroids = function(obj){
     config.gameState.astsPassed += 1;
     console.log(`Asteroids left: ${asteroids.length - config.gameState.astsPassed} after ${obj.listIndex} passed`);
 }
+const removeBelt = function(obj){
+    scene.remove(obj.getModel());
+    delete boundaryBelt[boundaryBelt.length-1];
+}
 
 document.body.appendChild(renderer.domElement);
 render();
@@ -134,6 +139,11 @@ function sceneMovement(asts){
         comet.setPosX(0); // to prevent from running too much
         showMessage("GAME OVER");
     }        
+
+    boundaryBelt.forEach(b => {
+        b.move()
+        b.fellOff(Width, Height, removeBelt)
+    })
 
     comet.move();
 
@@ -204,6 +214,20 @@ function update(){
     sceneMovement(asteroids);
 }
 
+// Set interval for looped function to set side asteroid belts.
+/*let belts = setInterval(function()
+{
+    const ast = new Asteroid(
+        Width, 
+        Height, 
+        1.5,
+        0,
+        -1
+    )
+    ast.getModel().position.x = 50;
+    boundaryBelt.push(ast);
+    scene.add(ast.getModel())
+}, 100);*/
 
 // Renders the changed scene objects.
 function render(){

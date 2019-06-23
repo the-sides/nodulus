@@ -26,9 +26,10 @@ class GameConfig {
     constructor(level){
         this.gameState = {
             points: 0,
-            messageUp: false,
             crntLevel: level,
+            messageUp: false,
             waitingForAsts: true,
+            beltThrottle: true,
             astsPassed: 0,
         }
 

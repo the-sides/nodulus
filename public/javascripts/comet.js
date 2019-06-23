@@ -134,16 +134,33 @@ function sceneMovement(asts){
             setTimeout(()=>{colliderThrottle = false}, 1000);
         }
     })
+
+    boundaryBelt.forEach(b => {
+        b.move();
+    })
+
+    // Throttled reaction for more complex operation and looping belt objects
+    // We're dealing with a worser complexity, however by splitting up is better with a throttle before an additional loop
+    if(config.gameState.beltThrottle){
+        config.gameState.beltThrottle = false;
+        
+        boundaryBelt.forEach(b => {
+            b.fellOff(Width, Height, removeBelt)
+        })
+        
+        setTimeout(()=>{
+            config.gameState.beltThrottle = true;
+        }, 400)
+
+    }
+
+
     if(!boundCheckX('x', comet.getPos().x, comet.getPos().z, camera)){
         comet.setVelX(0);
         comet.setPosX(0); // to prevent from running too much
         showMessage("GAME OVER");
     }        
 
-    boundaryBelt.forEach(b => {
-        b.move()
-        b.fellOff(Width, Height, removeBelt)
-    })
 
     comet.move();
 

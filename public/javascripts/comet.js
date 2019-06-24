@@ -226,6 +226,8 @@ let sideR = document.getElementById('right')
 if(sideL !== null){
     sideL.addEventListener('touchdown', ()=>{comet.setVelX(-0.5 ) }, false)
     sideR.addEventListener('touchdown', ()=>{comet.setVelX( 0.5 ) }, false)
+    sideL.addEventListener('touchmove', ()=>{comet.setVelX(-0.5 ) }, false)
+    sideR.addEventListener('touchmove', ()=>{comet.setVelX( 0.5 ) }, false)
 }
 
 document.addEventListener("keydown", keyPressed, false);

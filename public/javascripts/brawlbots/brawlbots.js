@@ -50,8 +50,7 @@ pointLight.castShadow = true;
 pointLight.intensity = 0.6;
 
 // Orbiter 
-// console.log( THREE)
-var controls = new THREE.OrbitControls(camera, renderer.domElement);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.update();
 
 // Fetch some models and set the scene

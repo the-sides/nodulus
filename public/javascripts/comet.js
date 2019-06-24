@@ -224,8 +224,8 @@ window.addEventListener("resize", ()=>{
 let sideL = document.getElementById('left')
 let sideR = document.getElementById('right')
 if(sideL !== null){
-    sideL.addEventListener('mousedown', ()=>{comet.setVelX(-0.5 ) }, false)
-    sideR.addEventListener('mousedown', ()=>{comet.setVelX( 0.5 ) }, false)
+    sideL.addEventListener('touchdown', ()=>{comet.setVelX(-0.5 ) }, false)
+    sideR.addEventListener('touchdown', ()=>{comet.setVelX( 0.5 ) }, false)
 }
 
 document.addEventListener("keydown", keyPressed, false);

@@ -13,13 +13,24 @@ a.btn__return{
   left: 0;
   z-index: 9;
 }
-#left{
+#touch-left{
   border:3px solid blue;
   flex: 1 50%;
 }
-#right{
+#touch-right{
   border:3px solid red;
   flex: 1 50%;
+}
+#menu{
+  position: absolute;
+  top: 30%;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  background-color: green;
+  width: 200px;
+  height: 200px;
+  opacity: 0.35;
 }
 #hud{
     display: flex;
@@ -46,15 +57,17 @@ a.btn__return{
     -webkit-user-drag: none;
     -moz-window-dragging: none;
 }
+
+/* Need scss */
 #bottom-right{
     right: 0;
     bottom: 0;
     -webkit-user-drag: none;
     -moz-window-dragging: none;
 }
- #bottom-right > img {
+#bottom-right > img {
       fill: green;
-    }
+}
 #status{
     display: none;
     position: unset !important;

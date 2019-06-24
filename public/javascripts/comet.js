@@ -186,13 +186,21 @@ function keyPressed(e){
             return 1;
         }
     }
-    if(k === "ArrowLeft"){
+    if(k == 'Escape'){
+        // config.gameState.menuToggle = true;
+        // openMenu();
+        console.log('open menu')
+    }
+    else if(k === "ArrowLeft"){
         comet.setVelX(-0.5);
         comet.setSpinX(-0.2);
     }
     else if(k === "ArrowRight"){
         comet.setVelX(0.5);
         comet.setSpinX(0.2);
+    }
+    else{
+        console.log('unregistered key', e, k)
     }
     if(verbose) console.log(k, '|', e.keyCode);
 }
@@ -215,9 +223,12 @@ window.addEventListener("resize", ()=>{
 
 let sideL = document.getElementById('left')
 let sideR = document.getElementById('right')
-sideL.addEventListener('mousedown', ()=>{comet.setVelX(-0.5 ) }, true)
-sideR.addEventListener('mousedown', ()=>{comet.setVelX( 0.5 ) }, true)
-document.addEventListener("keydown", keyPressed, true);
+if(sideL !== null){
+    sideL.addEventListener('mousedown', ()=>{comet.setVelX(-0.5 ) }, false)
+    sideR.addEventListener('mousedown', ()=>{comet.setVelX( 0.5 ) }, false)
+}
+
+document.addEventListener("keydown", keyPressed, false);
 
 /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////

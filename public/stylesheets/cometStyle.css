@@ -1,3 +1,12 @@
+html, body{
+  /* WE NEED AN AUTOPREFIXER!!!! AGHGHGHGHHGHG */
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
 #touch-grid{
   position: absolute;
   bottom:0;
@@ -22,6 +31,7 @@ a.btn__return{
   flex: 1 50%;
 }
 #menu{
+  display: none;
   position: absolute;
   top: 30%;
   right: 0;
@@ -62,8 +72,6 @@ a.btn__return{
 #bottom-right{
     right: 0;
     bottom: 0;
-    -webkit-user-drag: none;
-    -moz-window-dragging: none;
 }
 #bottom-right > img {
       fill: green;

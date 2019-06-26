@@ -1,5 +1,5 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt, collisionDetection} from './utils.js'
-import stars from './background.js'
+import starGen from './background.js'
 import { showMessage, hideMessage } from './hud.js';
 import gameConfig from './config.js'
 import {Comet, Asteroid } from './components.js'
@@ -18,12 +18,18 @@ let renderer = new THREE.WebGLRenderer({alpha: true});
 // Creates the camera and where it's looking.
 let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 5000);
 
+let controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.update();
+
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x999999);
 let pointLight = new THREE.PointLight(0x999999, 1);
 let pointLight2 = new THREE.PointLight(0x999999, 1);
-
+let starsA = starGen(-120);
+let starLaps = 1;
+let starsB = starGen(260);
+starLaps += 1;
 
 //* //////////////////////////////
 //      GAME MANAGER       //* // 
@@ -94,7 +100,7 @@ comet.setPosY(-Height/2 + 20)
 
 
 // Initial scene objects and render call.
-scene.add(light, pointLight,pointLight2, comet.getModel(), stars)
+scene.add(light, pointLight,pointLight2, comet.getModel(), starsA, starsB)
 const removeAsteroids = function(obj){
     scene.remove(obj.getModel());
     delete asteroids[obj.listIndex]
@@ -164,7 +170,9 @@ function sceneMovement(asts){
 
     comet.move();
 
-    stars.rotation.x -= 0.0005
+    starsA.position.y -= 0.2
+    starsB.position.y -= 0.2
+
 }
 
 
@@ -242,6 +250,7 @@ document.addEventListener("keydown", keyPressed, false);
 function update(){
     // boundCheckX('x', comet.getPos().x + comet.velX, comet.getPos().z, camera)
     sceneMovement(asteroids);
+    controls.update();
 }
 
 // Set interval for looped function to set side asteroid belts.
@@ -265,3 +274,34 @@ function render(){
     update();
     renderer.render(scene, camera); // This actually renders the animations.
 }
+
+// some setIntervals because we don't want to read three.js clock doc
+//  This is very bad practice, should be done a different way.
+// First star loop should delayed
+setTimeout(()=>{
+    setInterval(()=>{
+        console.log('ping')
+        console.log('ping')
+        console.log('ping')
+        console.log('ping', starLaps)
+        console.log('ping')
+        console.log('ping')
+        console.log('ping')
+        // return;
+        if(starLaps % 2 == 0){
+            // First loop, and odd occurances
+            scene.remove(starsA)
+            starsA = starGen(200)
+            scene.add(starsA);
+        }
+        else{
+            // Second loop, and even occurances
+            scene.remove(starsB)
+            starsB = starGen(200)
+            scene.add(starsB);
+    
+        }
+        starLaps += 1;
+    
+    },38e3)
+}, 20000)

@@ -13,6 +13,19 @@ function generateLevelConfig(levelNum){
     const levels = {
             1 : new LevelConfig(1, 290, 1.8, 2), 
             2 : new LevelConfig(2, 100, 2.8, 2), 
+            3 : new LevelConfig(2, 100, 2.8, 2), 
+            4 : new LevelConfig(2, 100, 2.8, 2), 
+            5 : new LevelConfig(2, 100, 2.8, 2), 
+            6 : new LevelConfig(2, 100, 2.8, 2), 
+            7 : new LevelConfig(2, 100, 2.8, 2), 
+            8 : new LevelConfig(2, 100, 2.8, 2), 
+            9 : new LevelConfig(2, 100, 2.8, 2), 
+            10 : new LevelConfig(2, 100, 2.8, 2), 
+            11 : new LevelConfig(2, 100, 2.8, 2), 
+            12 : new LevelConfig(2, 100, 2.8, 2), 
+            13 : new LevelConfig(2, 100, 2.8, 2), 
+            14 : new LevelConfig(2, 100, 2.8, 2), 
+            15 : new LevelConfig(2, 100, 2.8, 2), 
         };
     
     if (levels.length + 1 === levelNum) {

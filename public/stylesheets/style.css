@@ -58,4 +58,14 @@ a{
   width: 8rem;
   /* border: 1em solid lime; */
 }
-
+#cometNoHud{
+  max-width: 60px;
+  position: absolute;
+  padding: 50px 0 0 0 !important;
+  z-index: -1;
+  border: solid 1px black;
+  box-shadow: 0px 00px 2px 2px blue;
+  margin-left: -10px;
+  margin-top: 40px;
+  transform: translateX(-150px);
+}

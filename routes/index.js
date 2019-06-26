@@ -10,6 +10,10 @@ router.get('/comet',function(req, res, next){
   res.render('comet', { title: 'Comet' });
 });
 
+router.get('/cometNoHud',function(req, res, next){
+  res.render('cometNoHud', { title: 'Comet' });
+});
+
 router.get('/test',function(req, res, next){
   res.render('testEnv', { title: 'testing env' });
 });

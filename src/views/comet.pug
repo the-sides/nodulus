@@ -1,0 +1,20 @@
+extends layout
+block content
+  link(rel='stylesheet', href='/styles/cometStyle.css')
+
+  #touch-grid
+    #touch-left
+    #touch-right
+  #menu
+  #hud
+    #status message
+    #top-left
+    #top-right Level 1
+    #bottom-left
+    #bottom-right
+      img(src="/images/pointHud1.svg", alt="", srcset="")
+
+  //- script(src="games/comet.js")
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js")
+  script(src="scripts/comet.js" type="module")
+  script(src="vendors/OrbitControls.js")

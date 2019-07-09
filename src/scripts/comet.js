@@ -1,8 +1,8 @@
-import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt, collisionDetection} from './utils.js'
-import {starGen, beltGen} from './background.js'
+import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX} from './utils.js'
+import { starGen, beltGen } from './background.js'
 import { showMessage, hideMessage } from './hud.js';
 import gameConfig from './config.js'
-import {Comet, Asteroid } from './components.js'
+import { Comet, Asteroid } from './components.js'
 
 // Debugging variables.
 const debug = true;
@@ -100,10 +100,6 @@ function generateAsteroids(){
 };
 
 generateAsteroids();
-
-// Last minute sphere configurations
-//   Allows the sphere to properly initialize independent of camera
-
 
 
 // Initial scene objects and render call.

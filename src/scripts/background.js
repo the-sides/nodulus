@@ -1,4 +1,4 @@
-import {BeltPiece} from './components'
+import { BeltPiece } from './components'
 import { getRandomInt } from './utils';
 
 function starGen(offsetY = 0){
@@ -21,6 +21,8 @@ function starGen(offsetY = 0){
     stars.position.z = 1;
     return stars;
 }
+
+
 function beltGen(screenX, screenY){
     let pieces = [];
 
@@ -45,4 +47,5 @@ function beltGen(screenX, screenY){
     return pieces;
 
 }
+
 export {starGen, beltGen} ;

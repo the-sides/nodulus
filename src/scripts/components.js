@@ -15,6 +15,10 @@ class SpaceJunk {
     collisionDetect(otherObject) {
         return this.collider.intersectsSphere(otherObject.collider);
     }
+    
+    getModel() { return this.model }
+    getCollider() { return this.collider }
+
 }
 class Comet extends SpaceJunk {
     constructor() {
@@ -40,9 +44,8 @@ class Comet extends SpaceJunk {
         this.spinY = 0.3;
     }
 
-    getModel() { return this.model; }
-    getPos() { return this.model.position; }
 
+    getPos() { return this.model.position; }
     setPosX(newX) { this.model.position.x = newX; }
     setPosY(newY) { this.model.position.y = newY; }
     setVelX(newX) { this.velX = newX; }
@@ -84,8 +87,6 @@ class Asteroid extends SpaceJunk{
         this.listIndex = listIndice;
     }
 
-    getModel() { return this.model }
-    getCollider() { return this.collider }
     setVelY(newVelocity) { return this.velY = newVelocity; }
 
     initPosition(Width, Height) {
@@ -116,6 +117,27 @@ class Asteroid extends SpaceJunk{
     }
 }
 
+class BeltPiece {
+    constructor(x, y){
+        let geo = new THREE.SphereGeometry(2 * getRandomInt(0.8, 2), 3, 3);
+        let mat = new THREE.MeshPhongMaterial({ color: 0x999999 });
+        let ast = new THREE.Mesh(geo, mat);
+
+        // Init position
+        ast.position.x = x;
+        ast.position.y = y;
+
+        this.model = ast;
+
+    }
+
+    move(){
+        this.model.position.y -= 0.1;
+    }
+    fellOff(){
+        return true;
+    }
+}
 
 class Brawler {
     constructor() {
@@ -148,4 +170,4 @@ class Brawler {
     }
 }
 
-export { Comet, Asteroid, Brawler };
+export { Comet, Asteroid, BeltPiece, Brawler };

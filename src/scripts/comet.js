@@ -1,5 +1,5 @@
 import {visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX, getRandomInt, collisionDetection} from './utils.js'
-import starGen from './background.js'
+import {starGen, beltGen} from './background.js'
 import { showMessage, hideMessage } from './hud.js';
 import gameConfig from './config.js'
 import {Comet, Asteroid } from './components.js'
@@ -17,6 +17,11 @@ let renderer = new THREE.WebGLRenderer({alpha: true});
 
 // Creates the camera and where it's looking.
 let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 5000);
+    camera.position.set(0, 0, 250);
+
+// Given depth, calculate visable space within frame
+let Width =  visibleWidthAtZDepth(0, camera);
+let Height = visibleHeightAtZDepth(0, camera);
 
 let controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.update();
@@ -26,10 +31,6 @@ let scene = new THREE.Scene();
 let light = new THREE.AmbientLight(0x999999);
 let pointLight = new THREE.PointLight(0x999999, 1);
 let pointLight2 = new THREE.PointLight(0x999999, 1);
-let starsA = starGen(-120);
-let starLaps = 1;
-let starsB = starGen(260);
-starLaps += 1;
 
 //* //////////////////////////////
 //      GAME MANAGER       //* // 
@@ -39,22 +40,10 @@ const config = new gameConfig(1);
 //// let crntLevel = 1;
 let colliderThrottle = false;
 
-//* ///////////////////
-//   Containers    //
-let asteroids = [];
-let boundaryBelt = [];
-
-//* ////////////////////////////
-//* /    Game Objects   ///////
-const comet = new Comet();
-
-
-
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.BasicShadowMap;
-camera.position.set(0, 0, 250);
 
 scene.background = new THREE.Color(0x0f0f0f);
 
@@ -66,8 +55,27 @@ pointLight2.castShadow = true;
 pointLight2.intensity = 0.75;
 light.intensity = 0.2
 
-let Width =  visibleWidthAtZDepth(comet.getPos().z, camera);
-let Height = visibleHeightAtZDepth(comet.getPos().z, camera);
+
+
+//* ////////////////////////////
+//* /    Game Objects   ///////
+const comet = new Comet();
+      comet.setPosY(-Height/2 + 20)
+
+let starsA = starGen(-120);
+let starsB = starGen(260);
+let starLaps = 2;
+
+//* ///////////////////
+//   Containers    //
+let asteroids = [];
+let boundaryBelt = [];
+
+boundaryBelt = beltGen(Width, Height);
+
+for(let i = 0; i < boundaryBelt.length; i++){
+    scene.add(boundaryBelt[i].model)
+}
 
 function generateAsteroids(){
     asteroids = [];
@@ -88,19 +96,20 @@ function generateAsteroids(){
             },
             config.LevelConfig.astDelays * i
         );
-    }
-}
+    };
+};
 
 generateAsteroids();
 
 // Last minute sphere configurations
 //   Allows the sphere to properly initialize independent of camera
-comet.setPosY(-Height/2 + 20)
 
 
 
 // Initial scene objects and render call.
 scene.add(light, pointLight,pointLight2, comet.getModel(), starsA, starsB)
+
+
 const removeAsteroids = function(obj){
     scene.remove(obj.getModel());
     delete asteroids[obj.listIndex]
@@ -280,13 +289,7 @@ function render(){
 // First star loop should delayed
 setTimeout(()=>{
     setInterval(()=>{
-        console.log('ping')
-        console.log('ping')
-        console.log('ping')
-        console.log('ping', starLaps)
-        console.log('ping')
-        console.log('ping')
-        console.log('ping')
+        console.log('Looping starts, lap = ', starLaps)
         // return;
         if(starLaps % 2 == 0){
             // First loop, and odd occurances

@@ -1,11 +1,14 @@
-function init(offsetY = 0){
+import {BeltPiece} from './components'
+import { getRandomInt } from './utils';
+
+function starGen(offsetY = 0){
     console.log(offsetY)
     const stars_geometry = new THREE.Geometry();
     const stars_material = new THREE.PointsMaterial({
     color: 0xe6e6fa, 
     size: 1.3, 
     sizeAttenuation: false});
-    for(let i=0; i<5000; i++){
+    for(let i=0; i<2000; i++){
         var vertex = new THREE.Vector3();
         vertex.x = Math.random()*400 - 200;
         // vertex.y = 0;
@@ -18,6 +21,28 @@ function init(offsetY = 0){
     stars.position.z = 1;
     return stars;
 }
-// I am no exporting the function, 
-//    but the stars that are formed
-export default init;
+function beltGen(screenX, screenY){
+    let pieces = [];
+
+    let leftBound = (-screenX + 15)/2,
+       rightBound = (screenX - 15)/2
+
+    // Left side 
+    for(let i = 0; i < 10; i++){
+        pieces.push(
+            new BeltPiece(leftBound + getRandomInt(-3, 3), 
+                          screenY/2 - i * 15)
+        );
+    }
+
+    // Right side
+    for(let i = 0; i < 10; i++){
+        pieces.push(
+            new BeltPiece(rightBound + getRandomInt(-3, 3), 
+                          screenY/2 - i * 15)
+        );
+    }
+    return pieces;
+
+}
+export {starGen, beltGen} ;

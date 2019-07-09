@@ -2,7 +2,6 @@ import { BeltPiece } from './components'
 import { getRandomInt } from './utils';
 
 function starGen(offsetY = 0){
-    console.log(offsetY)
     const stars_geometry = new THREE.Geometry();
     const stars_material = new THREE.PointsMaterial({
     color: 0xe6e6fa, 

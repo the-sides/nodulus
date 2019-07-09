@@ -1,4 +1,4 @@
-import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX} from './utils.js'
+import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX } from './utils.js'
 import { starGen, beltGen } from './background.js'
 import { showMessage, hideMessage } from './hud.js';
 import gameConfig from './config.js'
@@ -290,17 +290,17 @@ setTimeout(()=>{
         if(starLaps % 2 == 0){
             // First loop, and odd occurances
             scene.remove(starsA)
-            starsA = starGen(200)
+            starsA = starGen(125)
             scene.add(starsA);
         }
         else{
             // Second loop, and even occurances
             scene.remove(starsB)
-            starsB = starGen(200)
+            starsB = starGen(125)
             scene.add(starsB);
     
         }
         starLaps += 1;
     
-    },38e3)
+    },25e3)
 }, 20000)

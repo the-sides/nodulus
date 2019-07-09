@@ -27,6 +27,6 @@ function watcher(cb){
     cb();
 }
 
-const dev = series(cometGame, styles, watcher)
+const dev = series(cometGame, styles)
 
 module.exports = {dev, watcher}

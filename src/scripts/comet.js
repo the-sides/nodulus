@@ -7,6 +7,7 @@ import { Comet, Asteroid } from './components.js'
 // Debugging variables.
 const debug = true;
 const verbose = false;
+let orbiting = false;
 
 
 //*  ////////////////////////////////////////////*/
@@ -23,8 +24,8 @@ let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHei
 let Width =  visibleWidthAtZDepth(0, camera);
 let Height = visibleHeightAtZDepth(0, camera);
 
-let controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.update();
+// Orbit controls
+let orbiter = null; 
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
@@ -199,6 +200,12 @@ function keyPressed(e){
             return 1;
         }
     }
+    if(k === 'o'){
+        if(orbiter === null){
+            orbiter = new THREE.OrbitControls(camera, renderer.domElement);
+            orbiting = true;
+        }
+    } 
     if(k == 'Escape'){
         // config.gameState.menuToggle = true;
         // openMenu();
@@ -255,7 +262,7 @@ document.addEventListener("keydown", keyPressed, false);
 function update(){
     // boundCheckX('x', comet.getPos().x + comet.velX, comet.getPos().z, camera)
     sceneMovement(asteroids);
-    controls.update();
+    if(orbiting) orbiter.update();
 }
 
 // Set interval for looped function to set side asteroid belts.

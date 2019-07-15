@@ -15,18 +15,19 @@ function brawlGame(){
             .pipe(webpack(require('./webpack.config')))
             .pipe(dest('dist/scripts/'));
 } 
+
+const dev = series(cometGame, styles)
+
 function watcher(cb){
+    dev();
     watch(
         [
           `../src/**/*.js`,
         ],
-        series(
-            cometGame
-        )
+        dev()
     );
     cb();
 }
 
-const dev = series(cometGame, styles)
 
 module.exports = {dev, watcher}

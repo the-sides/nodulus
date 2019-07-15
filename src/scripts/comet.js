@@ -25,6 +25,7 @@ let Height = visibleHeightAtZDepth(0, camera);
 
 // Orbit controls
 let orbiter = new THREE.OrbitControls(camera, renderer.domElement); 
+    orbiter.enabled = false;
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
@@ -35,7 +36,6 @@ let pointLight2 = new THREE.PointLight(0x999999, 1);
 //* //////////////////////////////
 //      GAME MANAGER       //* // 
 const config = new gameConfig(1);
-// const urlParams = new URLSearchParams(window.location.search)
 
 //// let crntLevel = 1;
 let colliderThrottle = false;

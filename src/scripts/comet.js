@@ -156,7 +156,7 @@ function sceneMovement(asts){
         config.gameState.beltThrottle = false;
         
         boundaryBelt.forEach(b => {
-            b.fellOff(Width, Height, removeBelt)
+            b.fellOff(Height)
         })
         
         setTimeout(()=>{

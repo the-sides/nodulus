@@ -134,7 +134,10 @@ class BeltPiece {
     move(){
         this.model.position.y -= 0.1;
     }
-    fellOff(){
+    fellOff(Height){
+        if(this.model.position.y < -Height/2 - 10){
+            this.model.position.y += Height + 20;
+        }
         return true;
     }
 }

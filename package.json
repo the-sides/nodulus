@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "gulp run --gulpfile ./build/gulpfile.js",
     "watch": "gulp --gulpfile ./build/gulpfile.js watcher",
     "build": "gulp --gulpfile ./build/gulpfile.js dev"
   },
@@ -13,11 +13,15 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "2.0.0-beta11",
+    "nodemon": "^1.19.1",
+    "pug": "^2.0.4",
     "three-orbitcontrols": "^2.102.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "glob-watcher": "^5.0.3",
     "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.4.2",
     "webpack-stream": "^5.2.1"
   }
 }

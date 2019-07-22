@@ -19,9 +19,11 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
+    "del": "^5.0.0",
     "glob-watcher": "^5.0.3",
     "gulp": "^4.0.2",
     "gulp-nodemon": "^2.4.2",
+    "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1"
   }
 }

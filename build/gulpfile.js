@@ -1,8 +1,16 @@
-const {src, dest, series, parallel} = require('gulp')
+const {src, dest, series} = require('gulp')
 const watch = require('glob-watcher')
 const webpack = require('webpack-stream')
 const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
+const del = require('del')
+const named = require('vinyl-named')
+
+function clean(){
+    return del([
+        './dist/scripts/**'
+    ])
+}
 
 async function bsTask(){
     console.log('this is bs');
@@ -27,26 +35,24 @@ function styles(){
     return src('../src/styles/**/*.css')
             .pipe(dest('dist/styles/'));
 }
-function cometGame(){
-    return src('../src/scripts/comet.js')
-            .pipe(webpack(require('./webpack.config')))
+function games(){
+    return src(['../src/scripts/comet.js',
+                '../src/scripts/brawlbots/brawlbots.js'
+               ])
+            .pipe(named())
+            .pipe(webpack({
+                mode: 'development'
+            }))
+            // .pipe(rename('comet.js'))
             .pipe(dest('dist/scripts/'));
 }
-function brawlGame(){
-    return src('../src/scripts/brawlbots/brawlbots.js')
-            .pipe(webpack(require('./webpack.config')))
-            .pipe(dest('dist/scripts/'));
-} 
 
-const dev = series(cometGame, styles)
+const dev = series(clean, games, styles)
 
 async function watcher(){
-    // dev();
-    watch( [ `../src/**/**`, `../views/**/*.pug`], ()=>{
+    watch( [ `../src/**/**/**`, `../views/**/*.pug`], ()=>{
         series(
-            // dev(),
-            cometGame(), 
-            styles(),
+            dev(),
             browserSync.reload() )
 
     });
@@ -54,7 +60,7 @@ async function watcher(){
 
 // const run = series(nodemonTask, bsTask, watcher);
 
-const run = series(watcher, nodemonTask, bsTask);
+const run = series(dev, watcher, nodemonTask, bsTask);
 // async function run(){ return series(nodemonTask, bsTask, watcher) }
 // const run = parallel(bsTask, nodemonTask);
 // const run = () => {nodemonTask(bsTask)}//series(bsTask, nodemonTask);

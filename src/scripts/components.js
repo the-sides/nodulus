@@ -20,6 +20,7 @@ class SpaceJunk {
     getCollider() { return this.collider }
 
 }
+
 class Comet extends SpaceJunk {
     constructor() {
         super()
@@ -54,8 +55,6 @@ class Comet extends SpaceJunk {
     setSpinY(newY) { this.spinY = newY; }
 
 }
-
-
 
 class Asteroid extends SpaceJunk{
     constructor(screenWidth, screenHeight, speed, waveCount, listIndice) {
@@ -142,35 +141,4 @@ class BeltPiece {
     }
 }
 
-class Brawler {
-    constructor() {
-        let geo = new THREE.BoxGeometry(1.0, 1.4, 0.8);
-        let mat = new THREE.MeshPhongMaterial({
-            color: 0xffffff,
-            wireframe: true,
-        });
-        this.model = new THREE.Mesh(geo, mat);
-        this.model.receiveShadow = true;
-        this.model.castShadow = true
-
-        this.movement = 'none'
-        this.model.position.x = 0;
-        this.animationStart = undefined;
-
-    }
-    moveLeft(){
-        const path = function(del){
-            
-            return del;
-        }
-        return path();
-    }
-    move(gamestate){
-        // By the current this.movement, from the current position, move towards there. 
-        //   if reached by a small threshhold, reset game and comp movement to none.
-
-        return true;
-    }
-}
-
-export { Comet, Asteroid, BeltPiece, Brawler };
+export { Comet, Asteroid, BeltPiece };

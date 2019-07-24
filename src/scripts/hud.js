@@ -5,7 +5,7 @@ function showMessage(message){
         return;
     elm.textContent = message;
     elm.style.display = 'block'
-    setTimeout(hideMessage, 3000)
+    //setTimeout(hideMessage, 3000)
 }
 function hideMessage(){
     if(elm === null) 

@@ -11,9 +11,9 @@ class LevelConfig {
 function generateLevelConfig(levelNum){
     // TODO: Make this process way better
     const levels = {
-             1 : new LevelConfig(7, 290, 1.5, 3), 
-             2 : new LevelConfig(8, 100, 1.7, 3), 
-             3 : new LevelConfig(8, 100, 2.0, 3), 
+             1 : new LevelConfig(7, 300, 1.5, 3), 
+             2 : new LevelConfig(8, 300, 1.7, 3), 
+             3 : new LevelConfig(8, 300, 2.0, 3), 
              4 : new LevelConfig(2, 100, 2.8, 2), 
              5 : new LevelConfig(2, 100, 2.8, 2), 
              6 : new LevelConfig(2, 100, 2.8, 2), 

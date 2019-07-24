@@ -39,6 +39,7 @@ const config = new gameConfig(1);
 
 //// let crntLevel = 1;
 let colliderThrottle = false;
+showMessage("To Start : use the Left and Right Arrows to move");
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -66,7 +67,10 @@ let starsA = starGen();
 let starsB = starGen();
 starsA.position.y = -130;
 starsB.position.y = 270;
-let starLaps = 2;
+
+let LOSER = false;
+let started = false;
+let reset = false;
 
 //* ///////////////////
 //   Containers    //
@@ -101,7 +105,7 @@ function generateAsteroids(){
     };
 };
 
-generateAsteroids();
+//generateAsteroids();
 
 
 // Initial scene objects and render call.
@@ -125,6 +129,12 @@ render();
 
 // Move objects in scene, checking relationship of new positions
 function sceneMovement(asts){
+    /*if(LOSER){
+        asts.forEach(ast=> {
+            removeAsteroids(ast);
+        })
+        return;
+    }*/
 
     if(asts.length === config.gameState.astsPassed && !config.gameState.waitingForAsts) {
         //* Reset game for next level
@@ -132,21 +142,32 @@ function sceneMovement(asts){
         // generateAsteroids(scene, asteroids)
     }
 
-    asts.forEach(ast => {
-        ast.move()
+    if(!LOSER){
+        if(!reset){
+            asts.forEach(ast => {
+                ast.move()
         
-        // return true once ast passes wave count
-        if(ast.fellOff(Width, Height, removeAsteroids))
-            config.addPoints(50)
+                // return true once ast passes wave count
+                if(ast.fellOff(Width, Height, removeAsteroids))
+                    config.addPoints(50)
 
-        if(!colliderThrottle && ast.collisionDetect(comet)){
-            colliderThrottle = true;
-            comet.setVelX(0);
-            // Game Over
-            showMessage("GAME OVER");
-            setTimeout(()=>{colliderThrottle = false}, 1000);
+                if(!colliderThrottle && ast.collisionDetect(comet)){
+                    colliderThrottle = true;
+                    comet.setVelX(0);
+                    // Game Over
+                    showMessage("GAME OVER");
+                    LOSER = true;
+                }
+            })
         }
-    })
+
+        else{
+            asts.forEach(ast=> {
+                removeAsteroids(ast);
+            })
+        }
+        reset = false;
+    }
 
     boundaryBelt.forEach(b => {
         b.move();
@@ -179,10 +200,12 @@ function sceneMovement(asts){
         comet.setVelX(0);
         comet.setPosX(0); // to prevent from running too much
         showMessage("GAME OVER");
+        LOSER = true;
     }        
 
-
-    comet.move();
+    if(!LOSER){
+        comet.move();
+    }
 
     starsA.position.y -= 0.2
     starsB.position.y -= 0.2
@@ -198,13 +221,20 @@ function sceneMovement(asts){
         ////////////////////////////////////////////
 function keyPressed(e){
     let k = e.key;
+    if(reset){
+        return 0;
+    }
 
     if(debug){
-        if(k === " "){ // Spacebar
+        if(k === " "){ // Spacebar, RESETS game after losing
             comet.setVelX(0);
             comet.setPosX(0);
             comet.setSpinX(0);
             hideMessage();
+            LOSER = false;
+            colliderThrottle = false;
+            config.gameState.crntLevel = 0;
+            reset = true;
             return 1;
         }
     }
@@ -219,10 +249,20 @@ function keyPressed(e){
     else if(k === "ArrowLeft"){
         comet.setVelX(-0.5);
         comet.setSpinX(-0.2);
+        if(!started){
+            hideMessage();
+            started = true;
+            generateAsteroids();
+        }
     }
     else if(k === "ArrowRight"){
         comet.setVelX(0.5);
         comet.setSpinX(0.2);
+        if(!started){
+            hideMessage();
+            started = true;
+            generateAsteroids();
+        }
     }
     else{
         console.log('unregistered key', e, k)

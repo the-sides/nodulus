@@ -5,6 +5,7 @@ const browserSync = require('browser-sync').create();
 const nodemon = require('gulp-nodemon');
 const del = require('del')
 const named = require('vinyl-named')
+const sourcemaps = require('gulp-sourcemaps');
 
 function clean(){
     return del([
@@ -39,10 +40,12 @@ function games(){
     return src(['../src/scripts/comet.js',
                 '../src/scripts/brawlbots/brawlbots.js'
                ])
+            .pipe(sourcemaps.init())
             .pipe(named())
             .pipe(webpack({
                 mode: 'development'
             }))
+            .pipe(sourcemaps.write())
             .pipe(dest('dist/scripts/'));
 }
 function images(){
@@ -63,7 +66,8 @@ async function watcher(){
     watch( [ `../src/**/**/**`, `../views/**/*.pug`], ()=>{
         series(
             dev(),
-            browserSync.reload() )
+            setTimeout(browserSync.reload,2000)
+            )
 
     });
 }

@@ -1,4 +1,4 @@
-import { Brawler } from '../components.js'
+import Brawler from './brawler.js'
 import inputController from './inputController.js'
 import generateAnimations from './animation.js';
 
@@ -8,8 +8,8 @@ import generateAnimations from './animation.js';
 // state. I can simply pass gameData to access anything I might need, as long 
 // as the property is defined here.
 let gameData = {
-    gameState: undefined,
     gameConfig: undefined,
+    gameState: undefined,
 }
 
 // Creates the renderer in Three.js and adds it to the HTML body.
@@ -32,7 +32,8 @@ gameData.gameState = {
         clock: new THREE.Clock(),
         players: {
             p1: undefined// new Brawler(),
-        }
+        },
+        buffer: true
     }
 
 // Initialize scene and it's renderer
@@ -58,7 +59,6 @@ let fighter = new Brawler();
 gameData.gameState.players.p1 = fighter;
 
 scene.add(fighter.model);
-
 scene.add(pointLight);
 
 render();
@@ -77,25 +77,22 @@ function inputManagement(event, gamedata) {
     gameData = inputController[event.type](event, gamedata);
 }
 
-// Avoid repetitions!!! todo
 window.addEventListener('keydown', (e) => inputManagement(e, gameData));
-window.addEventListener('keyup', (e) => inputManagement(e, gameData));
+window.addEventListener('keyup',   (e) => inputManagement(e, gameData));
 
 /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////
+
 //                NOW KEEP PLAYING!
 //
 //    UPDATE AND RENDER
+const speed = 0.05;
 function sceneMovement(){
-    if(gameData.gameState.animation !== 'none'){
-        console.log('moving');
-        // console.log("Player 1 moving", gameData.gameState.players.p1.movement);
-        // if(gameData.gameState.players.p1.movement === 'left'){
-        //     gameData.gameConfig.animations.movements.left(
-        //         gameData.gameState.players.p1.model,
-        //         gameData.gameState.animation
-        //     )
-        // }
+
+    if(gameData.gameState.buffer){
+        Object.keys(gameData.gameState.players).forEach( (player) =>{
+            gameData.gameState.players[player].move()
+        })
     }
 }
 
@@ -103,7 +100,6 @@ function sceneMovement(){
 function update() {
     controls.update();
     sceneMovement();
-    // gameData.gameState.players.p1.model.position.x -= 0.1;
 }
 
 // Renders the changed scene objects.

@@ -72,11 +72,7 @@ async function watcher(){
     });
 }
 
-// const run = series(nodemonTask, bsTask, watcher);
 
 const run = series(dev, watcher, nodemonTask, bsTask);
-// async function run(){ return series(nodemonTask, bsTask, watcher) }
-// const run = parallel(bsTask, nodemonTask);
-// const run = () => {nodemonTask(bsTask)}//series(bsTask, nodemonTask);
 
 module.exports = {dev, watcher, run}

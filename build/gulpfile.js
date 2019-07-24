@@ -1,4 +1,4 @@
-const {src, dest, series} = require('gulp')
+const {src, dest, series, parallel} = require('gulp')
 const watch = require('glob-watcher')
 const webpack = require('webpack-stream')
 const browserSync = require('browser-sync').create();
@@ -43,11 +43,21 @@ function games(){
             .pipe(webpack({
                 mode: 'development'
             }))
-            // .pipe(rename('comet.js'))
             .pipe(dest('dist/scripts/'));
 }
+function images(){
+    return src(['../src/images/**/**'])
+            .pipe(dest('dist/images/'))
+}
 
-const dev = series(clean, games, styles)
+const dev = series(
+    clean, 
+    games, 
+    parallel(
+        styles, 
+        images
+        )
+    )
 
 async function watcher(){
     watch( [ `../src/**/**/**`, `../views/**/*.pug`], ()=>{

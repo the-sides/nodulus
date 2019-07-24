@@ -62,8 +62,10 @@ light.intensity = 0.2
 const comet = new Comet();
       comet.setPosY(-Height/2 + 20)
 
-let starsA = starGen(-120);
-let starsB = starGen(260);
+let starsA = starGen();
+let starsB = starGen();
+starsA.position.y = -130;
+starsB.position.y = 270;
 let starLaps = 2;
 
 //* ///////////////////
@@ -159,6 +161,13 @@ function sceneMovement(asts){
             b.fellOff(Height)
         })
         
+        if(starsA.position.y <= -500){
+            starsA.position.y += 800;
+        }
+        if(starsB.position.y <= -500){
+            starsB.position.y += 800;
+        }
+
         setTimeout(()=>{
             config.gameState.beltThrottle = true;
         }, 400)
@@ -286,11 +295,11 @@ function render(){
 // some setIntervals because we don't want to read three.js clock doc
 //  This is very bad practice, should be done a different way.
 // First star loop should delayed
-setTimeout(()=>{
+/*setTimeout(()=>{
     setInterval(()=>{
         console.log('Looping starts, lap = ', starLaps)
         // return;
-        if(starLaps % 2 == 0){
+        /*if(starLaps % 2 == 0){
             // First loop, and odd occurances
             scene.remove(starsA)
             starsA = starGen(125)
@@ -303,7 +312,16 @@ setTimeout(()=>{
             scene.add(starsB);
     
         }
+        if(starsA.position.y <= -200){
+            starsA.position.y += 780;
+        }
+        else{
+            if(starsB.position.y <= -200){
+                starsB.position.y += 780;
+            }
+        }
+
         starLaps += 1;
     
     },25e3)
-}, 20000)
+}, 20000)*/

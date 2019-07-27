@@ -1,12 +1,24 @@
 extends layout
 
 block content
+    svg(width='217px', height='217px', viewBox='0 0 217 217', version='1.1', xmlns='http://www.w3.org/2000/svg', xmlns:xlink='http://www.w3.org/1999/xlink')
+        title Group
+        desc Created with Sketch.
+        g#Page-1(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd')
+            g#Group(stroke='#009186')
+                circle#oval1(stroke-width='1.862', cx='109', cy='109', r='102')
+                circle#oval2(stroke-width='1.98', cx='108.5', cy='108.5', r='107.51')
+                circle#oval3(stroke-width='1.62', cx='108.5', cy='108.5', r='88.5')
+
     #container
         #titler
-            h2.upper Welcome to Nodulus, 
-            h2.lower pick a game
-        #games
-            a(href="/comet") comet game
-            a(id='cometNoHud', href='/cometNoHud') comet nohud
-            a(href="/test") test env
-            a(href="/brawlbots") BRAWLBOTS
+            h2.upper Welcome to Nodulus
+        ul#games
+            li
+                a(href="/comet") comet game
+            li
+                a(id='cometNoHud', href='/cometNoHud') comet nohud
+            li
+                a(href="/test") test env
+            li
+                a(href="/brawlbots") BRAWLBOTS

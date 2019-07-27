@@ -37,7 +37,8 @@ async function nodemonTask(cb) {
 function styles(){
     return src('../src/styles/**/*.scss')
             .pipe(sass().on('error', sass.logError))
-            .pipe(dest('dist/styles/'));
+            .pipe(dest('dist/styles/'))
+            .pipe(browserSync.stream())
 }
 function games(){
     return src(['../src/scripts/comet.js',
@@ -66,7 +67,8 @@ const dev = series(
     )
 
 async function watcher(){
-    watch( [ `../src/**/**/**`, `../views/**/*.pug`], ()=>{
+    watch(['../src/styles/**/*.scss'], styles )
+    watch( [ `../src/scripts/**/**`, `../views/**/*.pug`], ()=>{
         series(
             dev(),
             setTimeout(browserSync.reload,2000)

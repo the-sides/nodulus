@@ -6,10 +6,12 @@ const nodemon = require('gulp-nodemon');
 const del = require('del')
 const named = require('vinyl-named')
 const sourcemaps = require('gulp-sourcemaps');
+const sass = require('gulp-sass');
 
 function clean(){
     return del([
-        './dist/scripts/**'
+        './dist/scripts/**',
+        './dist/styles/**'
     ])
 }
 
@@ -33,7 +35,8 @@ async function nodemonTask(cb) {
 
 
 function styles(){
-    return src('../src/styles/**/*.css')
+    return src('../src/styles/**/*.scss')
+            .pipe(sass().on('error', sass.logError))
             .pipe(dest('dist/styles/'));
 }
 function games(){

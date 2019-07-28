@@ -6,19 +6,19 @@ block content
         desc Created with Sketch.
         g#Page-1(stroke='none', stroke-width='1', fill='none', fill-rule='evenodd')
             g#Group(stroke='#009186')
-                circle#oval1(stroke-width='1.862', cx='109', cy='109', r='102')
-                circle#oval2(stroke-width='1.98', cx='108.5', cy='108.5', r='107.51')
-                circle#oval3(stroke-width='1.62', cx='108.5', cy='108.5', r='88.5')
+                circle#oval1(stroke-width='1.5', cx='108.5', cy='108.5', r='88.5')
+                circle#oval2(stroke-width='1.5', cx='109', cy='109', r='102')
+                circle#oval3(stroke-width='1.5', cx='108.5', cy='108.5', r='107.51')
 
     #container
         #titler
-            h2.upper Welcome to Nodulus
+            h1 Nodulus
         ul#games
-            li
+            li.game
                 a(href="/comet") comet game
-            li
-                a(id='cometNoHud', href='/cometNoHud') comet nohud
-            li
-                a(href="/test") test env
-            li
+                a#noHud(href='/cometNoHud') nohud
+            li.game
                 a(href="/brawlbots") BRAWLBOTS
+            li.game
+                a(href="/test") test env
+    section#footer

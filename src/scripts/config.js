@@ -1,4 +1,4 @@
-import { showMessage } from './hud.js';
+import { showMessage, hideMessage } from './hud.js';
 
 class LevelConfig {
     constructor(astN, astDelays, astSpeed, waveCount){
@@ -73,6 +73,9 @@ class GameConfig {
     }
     completedLevel(astGenerator){
         showMessage(`Congrats, moving onto level ${this.gameState.crntLevel + 1}`)
+        setTimeout(()=>{
+            hideMessage();
+        }, 2000)
         // if(messageUp) 
             // clear messages
         this.gameState.messageUp = false;

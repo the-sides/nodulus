@@ -1,4 +1,6 @@
 const elm = document.getElementById('status');
+const currentLevelDisplay = document.getElementById('top-right');
+const pointsDisplay = document.getElementById('bottom-right');
 
 function showMessage(message){
     if(elm === null) 
@@ -12,5 +14,16 @@ function hideMessage(){
         return;
     elm.style.display = 'none'
 }
+function updateLevel(lvl){
+    if(currentLevelDisplay === null)
+        return;
+    currentLevelDisplay.textContent = 'Level ' + lvl;
+}
+function updatePoints(pts){
+    if(pointsDisplay === null){
+        return;
+    }
+    pointsDisplay.display = 'Points: ' + pts;
+}
 
-export {showMessage, hideMessage};
+export {showMessage, hideMessage, updateLevel, updatePoints};

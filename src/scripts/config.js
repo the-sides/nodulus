@@ -1,4 +1,4 @@
-import { showMessage, hideMessage } from './hud.js';
+import { showMessage, hideMessage, updateLevel } from './hud.js';
 
 class LevelConfig {
     constructor(astN, astDelays, astSpeed, waveCount){
@@ -69,7 +69,8 @@ class GameConfig {
     }
 
     addPoints(earned){
-        this.points += earned;
+        this.gameState.points += earned;
+        console.log('Points: ' + this.gameState.points);
     }
     completedLevel(astGenerator){
         showMessage(`Congrats, moving onto level ${this.gameState.crntLevel + 1}`)
@@ -82,6 +83,7 @@ class GameConfig {
         this.gameState.astsPassed = 0; 
         this.gameState.waitingForAsts = true
         this.gameState.crntLevel += 1;
+        updateLevel(this.gameState.crntLevel);
         this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
 
         console.log(`At level ${this.gameState.crntLevel}`, this.LevelConfig)

@@ -1,6 +1,6 @@
 import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX } from './utils.js'
 import { starGen, beltGen } from './background.js'
-import { showMessage, hideMessage } from './hud.js';
+import { showMessage, hideMessage, updateLevel, updatePoints } from './hud.js';
 import gameConfig from './config.js'
 import { Comet, Asteroid } from './components.js'
 
@@ -148,8 +148,10 @@ function sceneMovement(asts){
                 ast.move()
         
                 // return true once ast passes wave count
-                if(ast.fellOff(Width, Height, removeAsteroids))
-                    config.addPoints(50)
+                if(ast.fellOff(Width, Height, removeAsteroids)){
+                    config.addPoints(50);
+                    updatePoints(config.gameState.points);
+                } 
 
                 if(!colliderThrottle && ast.collisionDetect(comet)){
                     colliderThrottle = true;
@@ -234,6 +236,9 @@ function keyPressed(e){
             LOSER = false;
             colliderThrottle = false;
             config.gameState.crntLevel = 0;
+            config.gameState.points = 0;
+            updateLevel(0);
+            updatePoints(0);
             reset = true;
             return 1;
         }

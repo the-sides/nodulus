@@ -310,58 +310,9 @@ function update(){
     orbiter.update();
 }
 
-// Set interval for looped function to set side asteroid belts.
-/*let belts = setInterval(function()
-{
-    const ast = new Asteroid(
-        Width, 
-        Height, 
-        1.5,
-        0,
-        -1
-    )
-    ast.getModel().position.x = 50;
-    boundaryBelt.push(ast);
-    scene.add(ast.getModel())
-}, 100);*/
-
 // Renders the changed scene objects.
 function render(){
     requestAnimationFrame(render); // This tells the browser we want to do animations.
     update();
     renderer.render(scene, camera); // This actually renders the animations.
 }
-
-// some setIntervals because we don't want to read three.js clock doc
-//  This is very bad practice, should be done a different way.
-// First star loop should delayed
-/*setTimeout(()=>{
-    setInterval(()=>{
-        console.log('Looping starts, lap = ', starLaps)
-        // return;
-        /*if(starLaps % 2 == 0){
-            // First loop, and odd occurances
-            scene.remove(starsA)
-            starsA = starGen(125)
-            scene.add(starsA);
-        }
-        else{
-            // Second loop, and even occurances
-            scene.remove(starsB)
-            starsB = starGen(125)
-            scene.add(starsB);
-    
-        }
-        if(starsA.position.y <= -200){
-            starsA.position.y += 780;
-        }
-        else{
-            if(starsB.position.y <= -200){
-                starsB.position.y += 780;
-            }
-        }
-
-        starLaps += 1;
-    
-    },25e3)
-}, 20000)*/

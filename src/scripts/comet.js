@@ -24,8 +24,8 @@ let Width =  visibleWidthAtZDepth(0, camera);
 let Height = visibleHeightAtZDepth(0, camera);
 
 // Orbit controls
-let orbiter = new THREE.OrbitControls(camera, renderer.domElement); 
-    orbiter.enabled = false;
+// let orbiter = new THREE.OrbitControls(camera, renderer.domElement); 
+//     orbiter.enabled = false;
 
 // Creates the scene and lighting.
 let scene = new THREE.Scene();
@@ -244,7 +244,7 @@ function keyPressed(e){
         }
     }
     if(k === 'o'){
-        orbiter.enabled = !orbiter.enabled;
+        // orbiter.enabled = !orbiter.enabled;
     } 
     if(k == 'Escape'){
         // config.gameState.menuToggle = true;
@@ -312,7 +312,7 @@ document.addEventListener("keydown", keyPressed, false);
 function update(){
     // boundCheckX('x', comet.getPos().x + comet.velX, comet.getPos().z, camera)
     sceneMovement(asteroids);
-    orbiter.update();
+    // orbiter.update();
 }
 
 // Renders the changed scene objects.

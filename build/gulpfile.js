@@ -34,12 +34,6 @@ async function nodemonTask(cb) {
 };
 
 
-function styles(){
-    return src('../src/styles/**/*.scss')
-            .pipe(sass().on('error', sass.logError))
-            .pipe(dest('dist/styles/'))
-            .pipe(browserSync.stream())
-}
 function games(){
     return src(['../src/scripts/comet.js',
                 '../src/scripts/brawlbots/brawlbots.js'
@@ -52,6 +46,19 @@ function games(){
             .pipe(sourcemaps.write())
             .pipe(dest('dist/scripts/'));
 }
+
+function styles(){
+    return src('../src/styles/**/*.scss')
+            .pipe(sass().on('error', sass.logError))
+            .pipe(dest('dist/styles/'))
+            .pipe(browserSync.stream())
+}
+
+function vendors(){
+    return src(['../node_modules/three/build/three.js','../node_modules/three-orbitcontrols/OrbitControls.js'])
+    .pipe(dest('dist/vendors/'))
+}
+
 function images(){
     return src(['../src/images/**/**'])
             .pipe(dest('dist/images/'))
@@ -59,6 +66,7 @@ function images(){
 
 const dev = series(
     clean, 
+    vendors,
     games, 
     parallel(
         styles, 

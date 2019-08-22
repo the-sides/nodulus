@@ -25,6 +25,7 @@
     "gulp-nodemon": "^2.4.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
+    "three": "^0.107.0",
     "vinyl-named": "^1.1.0",
     "webpack-stream": "^5.2.1"
   }

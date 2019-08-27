@@ -1,6 +1,6 @@
 const elm = document.getElementById('status');
 const currentLevelDisplay = document.getElementById('top-right');
-const pointsDisplay = document.getElementById('bottom-right');
+const pointsDisplay = currentLevelDisplay.querySelector('.pointHud')
 
 function showMessage(message){
     if(elm === null) 
@@ -17,13 +17,13 @@ function hideMessage(){
 function updateLevel(lvl){
     if(currentLevelDisplay === null)
         return;
-    currentLevelDisplay.textContent = 'Level ' + lvl;
+    currentLevelDisplay.textContent = 'Level: ' + lvl;
 }
 function updatePoints(pts){
     if(pointsDisplay === null){
         return;
     }
-    pointsDisplay.display = 'Points: ' + pts;
+    pointsDisplay.textContent = 'Points: ' + Number(pts);
 }
 
 export {showMessage, hideMessage, updateLevel, updatePoints};

@@ -36,6 +36,7 @@ let pointLight2 = new THREE.PointLight(0x999999, 1);
 //* //////////////////////////////
 //      GAME MANAGER       //* // 
 const config = new gameConfig(1);
+config.addPoints(0);
 
 //// let crntLevel = 1;
 let colliderThrottle = false;
@@ -150,7 +151,6 @@ function sceneMovement(asts){
                 // return true once ast passes wave count
                 if(ast.fellOff(Width, Height, removeAsteroids)){
                     config.addPoints(50);
-                    updatePoints(config.gameState.points);
                 } 
 
                 if(!colliderThrottle && ast.collisionDetect(comet)){
@@ -227,21 +227,19 @@ function keyPressed(e){
         return 0;
     }
 
-    if(debug){
-        if(k === " "){ // Spacebar, RESETS game after losing
-            comet.setVelX(0);
-            comet.setPosX(0);
-            comet.setSpinX(0);
-            hideMessage();
-            LOSER = false;
-            colliderThrottle = false;
-            config.gameState.crntLevel = 0;
-            config.gameState.points = 0;
-            updateLevel(0);
-            updatePoints(0);
-            reset = true;
-            return 1;
-        }
+    if(k === " "){ // Spacebar, RESETS game after losing
+        comet.setVelX(0);
+        comet.setPosX(0);
+        comet.setSpinX(0);
+        hideMessage();
+        LOSER = false;
+        colliderThrottle = false;
+        config.gameState.crntLevel = 0;
+        config.gameState.points = 0;
+        updateLevel(0);
+        config.addPoints(0);
+        reset = true;
+        return 1;
     }
     if(k === 'o'){
         // orbiter.enabled = !orbiter.enabled;

@@ -1,4 +1,4 @@
-import { showMessage, hideMessage, updateLevel } from './hud.js';
+import { showMessage, hideMessage, updateLevel, updatePoints } from './hud.js';
 
 class LevelConfig {
     constructor(astN, astDelays, astSpeed, waveCount){
@@ -20,11 +20,11 @@ function generateLevelConfig(levelNum){
              7 : new LevelConfig(10, 280, 2.6, 4), 
              8 : new LevelConfig(11, 280, 2.6, 4), 
              9 : new LevelConfig(12, 280, 2.6, 4), 
-            10 : new LevelConfig(15, 260, 2.6, 4), 
-            11 : new LevelConfig(15, 260, 2.6, 4), 
-            12 : new LevelConfig(15, 260, 2.6, 4), 
-            13 : new LevelConfig(15, 260, 2.6, 4), 
-            14 : new LevelConfig(15, 260, 2.6, 4), 
+            10 : new LevelConfig(13, 260, 2.6, 4), 
+            11 : new LevelConfig(13, 260, 2.6, 4), 
+            12 : new LevelConfig(13, 260, 2.6, 4), 
+            13 : new LevelConfig(14, 260, 2.6, 4), 
+            14 : new LevelConfig(14, 260, 2.6, 4), 
             15 : new LevelConfig(15, 260, 2.6, 4), 
         };
     
@@ -71,6 +71,7 @@ class GameConfig {
     addPoints(earned){
         this.gameState.points += earned;
         console.log('Points: ' + this.gameState.points);
+        updatePoints(this.gameState.points)
     }
     completedLevel(astGenerator){
         showMessage(`Congrats, moving onto level ${this.gameState.crntLevel + 1}`)
@@ -90,9 +91,9 @@ class GameConfig {
         // Check for max level
         if(this.LevelConfig === undefined){
             showMessage("You beat the game, we didn't write more levels")
-            return;
-            this.gameState.crntLevel -= 1;
-            this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
+            // return;
+            // this.gameState.crntLevel -= 1;
+            // this.LevelConfig = generateLevelConfig(this.gameState.crntLevel)
         }
         setTimeout(()=>{
             console.log('generating asteroids')

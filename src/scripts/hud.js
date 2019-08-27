@@ -1,6 +1,7 @@
 const elm = document.getElementById('status');
-const currentLevelDisplay = document.getElementById('top-right');
-const pointsDisplay = currentLevelDisplay.querySelector('.pointHud')
+const hudContainer = document.getElementById('top-right');
+const currentLevelDisplay = hudContainer.querySelector('.levelHud')
+const pointsDisplay = hudContainer.querySelector('.pointHud')
 
 function showMessage(message){
     if(elm === null) 

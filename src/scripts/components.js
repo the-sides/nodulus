@@ -96,7 +96,7 @@ class Asteroid extends SpaceJunk{
         this.collider.center = this.model.position;
     }
 
-    fellOff(screenWidth, screenHeight, removeFunc) {
+    fellOff(screenWidth, screenHeight, removeFunc, config) {
         if (this.model.position.y <= (-(screenHeight / 2) - 30)) {
             this.initPosition(screenWidth, screenHeight)
             this.wavePasses -= 1;
@@ -106,7 +106,10 @@ class Asteroid extends SpaceJunk{
                 // delete this.collider;
                 return true;
             }
-            else return false;
+            else{
+                config.addPoints(50);
+                return false;
+            }
         }
     }
 

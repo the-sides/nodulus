@@ -149,9 +149,11 @@ function sceneMovement(asts){
                 ast.move()
         
                 // return true once ast passes wave count
-                if(ast.fellOff(Width, Height, removeAsteroids)){
+                if(ast.fellOff(Width, Height, removeAsteroids, config)){
                     config.addPoints(50);
-                } 
+                }
+               
+                
 
                 if(!colliderThrottle && ast.collisionDetect(comet)){
                     colliderThrottle = true;
@@ -289,8 +291,8 @@ window.addEventListener("resize", ()=>{
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-let sideL = document.getElementById('left')
-let sideR = document.getElementById('right')
+let sideL = document.getElementById('touch-left')
+let sideR = document.getElementById('touch-right')
 if(sideL !== null){
     sideL.addEventListener('touchdown', ()=>{comet.setVelX(-0.5 ) }, false)
     sideR.addEventListener('touchdown', ()=>{comet.setVelX( 0.5 ) }, false)

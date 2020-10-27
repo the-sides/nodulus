@@ -293,11 +293,30 @@ window.addEventListener("resize", ()=>{
 
 let sideL = document.getElementById('touch-left')
 let sideR = document.getElementById('touch-right')
+const checkLoss = () => {
+    if(!started){
+        hideMessage();
+        started = true;
+        generateAsteroids();
+    }
+    if(LOSER){
+        comet.setVelX(0);
+        comet.setPosX(0);
+        comet.setSpinX(0);
+        hideMessage();
+        LOSER = false;
+        colliderThrottle = false;
+        config.gameState.crntLevel = 0;
+        config.gameState.points = 0;
+        updateLevel(0);
+        config.addPoints(0);
+        reset = true;
+        return 1;
+    }
+}
 if(sideL !== null){
-    sideL.addEventListener('touchdown', ()=>{comet.setVelX(-0.5 ) }, false)
-    sideR.addEventListener('touchdown', ()=>{comet.setVelX( 0.5 ) }, false)
-    sideL.addEventListener('touchmove', ()=>{comet.setVelX(-0.5 ) }, false)
-    sideR.addEventListener('touchmove', ()=>{comet.setVelX( 0.5 ) }, false)
+    sideL.addEventListener('click', ()=>{checkLoss(); comet.setVelX(-0.75 ) }, false)
+    sideR.addEventListener('click', ()=>{checkLoss(); comet.setVelX( 0.75 ) }, false)
 }
 
 document.addEventListener("keydown", keyPressed, false);

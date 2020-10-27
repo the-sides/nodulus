@@ -1,5 +1,5 @@
-import { BeltPiece } from './components'
-import { getRandomInt } from './utils';
+import { BeltPiece } from './components.js'
+import { getRandomInt } from './utils.js';
 
 function starGen(offsetY = 0){
     const stars_geometry = new THREE.Geometry();

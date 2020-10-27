@@ -1,4 +1,4 @@
-import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX } from './utils.js'
+import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX } from 'utils.js'
 import { starGen, beltGen } from './background.js'
 import { showMessage, hideMessage, updateLevel, updatePoints } from './hud.js';
 import gameConfig from './config.js'

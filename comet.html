@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title>Nodulus Games - Comet</title>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Orbitron"
     />
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="favicon.png" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FYY6BQ3ZG6"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-FYY6BQ3ZG6");
+    </script>
   </head>
 
   <body>
     <div id="menu"></div>
     <div id="hud">
-        <div id="status">message</div>
-        <div id="top-left"></div>
-        <div id="top-right">
-            <div class="levelHud">Level: 1</div>
-            <div class="pointHud">Points: 0</div>
-        </div>
-        <div id="bottom-left"></div>
-        <div id="bottom-right"></div>
+      <div id="status">message</div>
+      <div id="top-left"></div>
+      <div id="top-right">
+        <div class="levelHud">Level: 1</div>
+        <div class="pointHud">Points: 0</div>
+      </div>
+      <div id="bottom-left"></div>
+      <div id="bottom-right"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
     <script type="module" src="./src/scripts/comet.js"></script>

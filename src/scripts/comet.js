@@ -252,8 +252,8 @@ function keyPressed(e){
         console.log('open menu')
     }
     else if(k === "ArrowLeft"){
-        comet.setVelX(-0.5);
-        comet.setSpinX(-0.2);
+        comet.setVelX(-0.75);
+        comet.setSpinX(-0.4);
         if(!started){
             hideMessage();
             started = true;
@@ -261,8 +261,8 @@ function keyPressed(e){
         }
     }
     else if(k === "ArrowRight"){
-        comet.setVelX(0.5);
-        comet.setSpinX(0.2);
+        comet.setVelX(0.75);
+        comet.setSpinX(0.4);
         if(!started){
             hideMessage();
             started = true;

@@ -41,9 +41,6 @@ node_modules/
 # certificates
 certs
 
-# Yarn lock because package-lock.json is tracked
-yarn.lock
-
 # Misc
 .vscode
 .DS_Store

@@ -73,6 +73,9 @@ let LOSER = false;
 let started = false;
 let reset = false;
 
+// move speed variable
+let moveSpeed = 1;
+
 //* ///////////////////
 //   Containers    //
 let asteroids = [];
@@ -252,7 +255,7 @@ function keyPressed(e){
         console.log('open menu')
     }
     else if(k === "ArrowLeft"){
-        comet.setVelX(-0.5);
+        comet.setVelX(moveSpeed * -1);
         comet.setSpinX(-0.2);
         if(!started){
             hideMessage();
@@ -261,7 +264,7 @@ function keyPressed(e){
         }
     }
     else if(k === "ArrowRight"){
-        comet.setVelX(0.5);
+        comet.setVelX(moveSpeed);
         comet.setSpinX(0.2);
         if(!started){
             hideMessage();
@@ -269,6 +272,13 @@ function keyPressed(e){
             generateAsteroids();
         }
     }
+    else if(k === "ArrowDown"){
+        moveSpeed -= .1;
+    }
+    else if(k === "ArrowUp"){
+        moveSpeed += .1;
+    }
+
     else{
         console.log('unregistered key', e, k)
     }

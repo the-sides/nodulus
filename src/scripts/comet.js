@@ -286,6 +286,11 @@ function keyPressed(e){
     }
     if(verbose) console.log(k, '|', e.keyCode);
 }
+function keyLifted (e) {
+	if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+		comet.setVelX(0);
+	}
+}
 
 // Event listeners
 window.addEventListener("resize", ()=>{
@@ -313,6 +318,7 @@ if(sideL !== null){
 }
 
 document.addEventListener("keydown", keyPressed, false);
+document.addEventListener("keyup", keyLifted, false);
 
 /////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////

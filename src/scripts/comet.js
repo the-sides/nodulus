@@ -40,7 +40,7 @@ config.addPoints(0);
 
 //// let crntLevel = 1;
 let colliderThrottle = false;
-showMessage("To Start : use the Left and Right Arrows to move");
+showMessage("To Start : use the Left and Right Arrows to move. Use up and down arrows to change move speed.");
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);

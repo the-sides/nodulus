@@ -40,6 +40,8 @@ config.addPoints(0);
 
 //// let crntLevel = 1;
 let colliderThrottle = false;
+
+// game instructions
 showMessage("To Start : use left/right arrows or a/d to move. Use up/down arrows or w/s to change move speed.");
 
 // Initialize scene and it's renderer

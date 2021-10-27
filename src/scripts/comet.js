@@ -1,6 +1,6 @@
 import { visibleHeightAtZDepth, visibleWidthAtZDepth, boundCheckX } from './utils.js'
 import { starGen, beltGen } from './background.js'
-import { showMessage, hideMessage, updateLevel, updatePoints } from './hud.js';
+import { showMessage, hideMessage, updateLevel, updatePoints, updateSpeed } from './hud.js';
 import gameConfig from './config.js'
 import { Comet, Asteroid } from './components.js'
 
@@ -74,7 +74,7 @@ let started = false;
 let reset = false;
 
 // move speed variable
-let moveSpeed = 1;
+let moveSpeed = 10;
 
 //* ///////////////////
 //   Containers    //
@@ -255,7 +255,7 @@ function keyPressed(e){
         console.log('open menu')
     }
     else if(k === "ArrowLeft"){
-        comet.setVelX(moveSpeed * -1);
+        comet.setVelX((moveSpeed/10) * -1);
         comet.setSpinX(-0.2);
         if(!started){
             hideMessage();
@@ -264,7 +264,7 @@ function keyPressed(e){
         }
     }
     else if(k === "ArrowRight"){
-        comet.setVelX(moveSpeed);
+        comet.setVelX(moveSpeed/10);
         comet.setSpinX(0.2);
         if(!started){
             hideMessage();
@@ -273,10 +273,12 @@ function keyPressed(e){
         }
     }
     else if(k === "ArrowDown"){
-        moveSpeed -= .1;
+        moveSpeed -= 1;
+        updateSpeed(moveSpeed);
     }
     else if(k === "ArrowUp"){
-        moveSpeed += .1;
+        moveSpeed += 1;
+        updateSpeed(moveSpeed);
     }
 
     else{

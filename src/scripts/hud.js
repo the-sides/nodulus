@@ -2,6 +2,7 @@ const elm = document.getElementById('status');
 const hudContainer = document.getElementById('top-right');
 const currentLevelDisplay = hudContainer.querySelector('.levelHud')
 const pointsDisplay = hudContainer.querySelector('.pointHud')
+const speedDisplay = hudContainer.querySelector('.speedHud')
 
 function showMessage(message){
     if(elm === null) 
@@ -20,6 +21,13 @@ function updateLevel(lvl){
         return;
     currentLevelDisplay.textContent = 'Level: ' + lvl;
 }
+
+function updateSpeed(moveSpeed){
+    if(speedDisplay === null)
+        return;
+    speedDisplay.textContent = 'Speed: ' + moveSpeed;
+}
+
 function updatePoints(pts){
     if(pointsDisplay === null){
         return;
@@ -27,4 +35,4 @@ function updatePoints(pts){
     pointsDisplay.textContent = 'Points: ' + Number(pts);
 }
 
-export {showMessage, hideMessage, updateLevel, updatePoints};
+export {showMessage, hideMessage, updateLevel, updatePoints, updateSpeed};

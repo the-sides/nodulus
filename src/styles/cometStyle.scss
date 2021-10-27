@@ -54,19 +54,24 @@ a.btn__return{
 }
 #top-right{
     clip-path: polygon(0 0, 100% 0, 100% 20%, 24% 28%);
-    min-height: 200px;
+    min-height: 320px;
     min-width: 160px;
-    background-color: green;
+    background-color: purple;
     padding-left: 3em;
     padding-top: 0.5em;
     right: 0;
     top: 0;
     .pointHud{
       background: transparent;
-      margin: 0.5em;
+      margin: .5em;
+      margin-top: .5em;
+    }
+    .speedHud{
+      background: transparent;
+      margin: 1em;
+      margin-top: .5em;
     }
 }
-
 
 #bottom-right{
     right: 0;

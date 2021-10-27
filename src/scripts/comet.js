@@ -40,7 +40,7 @@ config.addPoints(0);
 
 //// let crntLevel = 1;
 let colliderThrottle = false;
-showMessage("To Start : use the Left and Right Arrows to move. Use up and down arrows to change move speed.");
+showMessage("To Start : use left/right arrows or a/d to move. Use up/down arrows or w/s to change move speed.");
 
 // Initialize scene and it's renderer
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -74,7 +74,7 @@ let started = false;
 let reset = false;
 
 // move speed variable
-let moveSpeed = 10;
+let moveSpeed = 15;
 
 //* ///////////////////
 //   Containers    //
@@ -254,7 +254,7 @@ function keyPressed(e){
         // openMenu();
         console.log('open menu')
     }
-    else if(k === "ArrowLeft"){
+    else if(k === "ArrowLeft" || k === "a"){
         comet.setVelX((moveSpeed/10) * -1);
         comet.setSpinX(-0.2);
         if(!started){
@@ -263,7 +263,7 @@ function keyPressed(e){
             generateAsteroids();
         }
     }
-    else if(k === "ArrowRight"){
+    else if(k === "ArrowRight" || k === "d"){
         comet.setVelX(moveSpeed/10);
         comet.setSpinX(0.2);
         if(!started){
@@ -272,11 +272,12 @@ function keyPressed(e){
             generateAsteroids();
         }
     }
-    else if(k === "ArrowDown"){
+    else if(k === "ArrowDown" || k === "s"){
         moveSpeed -= 1;
         updateSpeed(moveSpeed);
     }
-    else if(k === "ArrowUp"){
+
+    else if(k === "ArrowUp" || k === "w"){
         moveSpeed += 1;
         updateSpeed(moveSpeed);
     }
@@ -287,9 +288,12 @@ function keyPressed(e){
     if(verbose) console.log(k, '|', e.keyCode);
 }
 function keyLifted (e) {
-	if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-		comet.setVelX(0);
+	if(e.key === 'ArrowLeft' || e.key === 'a') {
+		comet.setVelX(-0.1);
 	}
+    else if(e.key === 'ArrowRight' || e.key === 'd') {
+        comet.setVelX(0.1);
+    }
 }
 
 // Event listeners

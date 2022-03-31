@@ -4,6 +4,7 @@
 </script>
 
 <main>
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
 	<a class="btn__return" href="/">return </a>
 	<div id="menu" />
 	<div id="hud">

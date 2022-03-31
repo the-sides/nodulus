@@ -1,5 +1,5 @@
 <script type="module">
-	import './../scripts/comet.js';
+	import '$lib/scripts/comet/comet.js';
 	import './../styles/comet.css';
 </script>
 

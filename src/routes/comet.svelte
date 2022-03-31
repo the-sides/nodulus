@@ -1,11 +1,10 @@
-<script type="module">
+<script>
 	import '$lib/scripts/comet/comet.js';
 	import './../styles/comet.css';
 </script>
 
 <main>
 	<a class="btn__return" href="/">return </a>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/104/three.min.js"></script>
 	<div id="menu" />
 	<div id="hud">
 		<div id="status">message</div>

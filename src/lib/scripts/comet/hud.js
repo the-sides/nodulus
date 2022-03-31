@@ -1,10 +1,6 @@
-const elm = document.getElementById('status');
-const hudContainer = document.getElementById('top-right');
-const currentLevelDisplay = hudContainer.querySelector('.levelHud')
-const pointsDisplay = hudContainer.querySelector('.pointHud')
-const speedDisplay = hudContainer.querySelector('.speedHud')
 
 function showMessage(message){
+	const elm = document?.getElementById('status') ?? null;
     if(elm === null) 
         return;
     elm.textContent = message;
@@ -12,23 +8,27 @@ function showMessage(message){
     //setTimeout(hideMessage, 3000)
 }
 function hideMessage(){
+	const elm = document?.getElementById('status');
     if(elm === null) 
         return;
     elm.style.display = 'none'
 }
 function updateLevel(lvl){
+	const currentLevelDisplay = document?.querySelector('.levelHud')
     if(currentLevelDisplay === null)
         return;
     currentLevelDisplay.textContent = 'Level: ' + lvl;
 }
 
 function updateSpeed(moveSpeed){
+	const speedDisplay = document?.querySelector('.speedHud')
     if(speedDisplay === null)
         return;
     speedDisplay.textContent = 'Speed: ' + moveSpeed;
 }
 
 function updatePoints(pts){
+	const pointsDisplay = document?.querySelector('.pointHud')
     if(pointsDisplay === null){
         return;
     }

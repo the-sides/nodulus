@@ -4,10 +4,14 @@ import { showMessage, hideMessage, updateLevel, updatePoints, updateSpeed } from
 import gameConfig from './config.js'
 import { Comet, Asteroid } from './components.js'
 
+const run = () => {
+
+if(typeof document === 'undefined') return false;
+
+
 // Debugging variables.
 const debug = true;
 const verbose = false;
-
 
 //*  ////////////////////////////////////////////*/
 //* //   RENDERING AND GAME SCENE    //////////*/
@@ -345,3 +349,7 @@ function render(){
     update();
     renderer.render(scene, camera); // This actually renders the animations.
 }
+
+}
+
+run()

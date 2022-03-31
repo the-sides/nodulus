@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+	margin: 0;
+	background-color: #191c20;
+	color: #eeeeee;
+	font-family: Orbitron;
+}
+svg {
+	position: absolute;
+	left: -70px;
+	top: 20px;
+	transform: scale(2.5);
+	z-index: -1;
+	circle {
+		box-shadow: 0px 00px 2px 2px blue;
+		stroke: #00adb5;
+		transform-origin: center;
+	}
+	#oval1 {
+		stroke-dasharray: 50;
+		animation: spin 50s linear infinite;
+	}
+	#oval2 {
+		stroke-dasharray: 75;
+		animation: spin 30s linear infinite;
+	}
+	#oval3 {
+		transform-origin: center;
+		stroke-dasharray: 90;
+		stroke-dashoffset: 500;
+		animation: spin 21s linear infinite;
+	}
+}
+#container {
+	margin-top: 10vh;
+	animation: fadeIn 1s ease-in-out;
+	overflow-x: hidden;
+}
+
+#titler {
+	margin-right: 40vw;
+	h1 {
+		text-align: right;
+		/* border: 1px solid lime; */
+	}
+}
+
+/*  Three.js global */
+canvas {
+	width: 100%;
+	height: 100%;
+}
+
+/* Site-wide attributes */
+a {
+	color: inherit;
+	text-decoration: unset;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+#games {
+	margin-left: 40vw;
+	width: 50vw;
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	text-align: left;
+	padding-left: 0;
+	.game {
+		width: 100%;
+		position: relative;
+		justify-self: right;
+		margin: 0.8rem auto;
+		margin-right: 1rem;
+		border-radius: 10px;
+		border: 2px solid #00adb5;
+		&::after {
+			content: '';
+			position: absolute;
+			width: 100px;
+			top: 0;
+			background-color: #222831;
+		}
+		@media (min-width: 640px) {
+			width: 100%;
+			transform: translateX(30%);
+		}
+		a {
+			display: block;
+			padding: 3rem;
+			padding-right: 20vw;
+		}
+		a#noHud {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+			border-left: 2px solid #00adb5;
+		}
+		transition: all 0.4s ease-in;
+		&:hover {
+			transform: translateX(10%);
+			background-color: #222831;
+		}
+	}
+}
+
+#footer {
+	display: block;
+	min-height: 40vh;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

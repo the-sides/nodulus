@@ -1,3 +1,29 @@
+# Nodulus web games
+<s>nodulus.netlify.app</s>
+
+Nodulus is a "collection" of web games, primarly hosting comet game, while brawlbots was forgotten in development. 
+
+Homepage
+https://the-sides.github.io/nodulus/
+![Homepage](docs/nodulusHome.png)
+
+Comet Game
+https://the-sides.github.io/nodulus/comet.html
+![Comet gameplay](docs/cometgame.png)
+
+
+
+
+
+Nick Clark is no longer the only player to beat this game!
+Congrats to Elizabeth!
+
+While on the express/pug/nodemon BE...
+Node version MUST be before 13.xx
+Works on 12.22
+
+
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
@@ -38,3 +64,4 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+

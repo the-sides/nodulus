@@ -1,0 +1,18 @@
+<script>
+    import { T } from "@threlte/core";
+    import { onMount } from "svelte";
+</script>
+
+
+<T.PerspectiveCamera
+    makeDefault
+    position={[10, 10, 10]}
+    on:create={({ ref }) => {
+        ref.lookAt(0, 1, 0);
+    }}
+/>
+
+<T.Mesh position.y={0}>
+    <T.BoxGeometry args={[1, 2, 1]} />
+    <T.MeshBasicMaterial color="hotpink" />
+</T.Mesh>
